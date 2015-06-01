@@ -1,5 +1,4 @@
 package com.es.masjid.madmin.util;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -20,6 +19,8 @@ import java.util.Locale;
 import javax.annotation.Resource;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,8 @@ public class MasjidUtility {
 	
 	private final String DATA_PATH = "data.path";
 	private final String PRAYER_TIMES_FILE_NAME = "prayertimes.csv";	
+	
+	Logger logger = LoggerFactory.getLogger(MasjidUtility.class);
 	
 	public DailyScheduleBean createDailyScheduleBean(String  schedule){
 		DailyScheduleBean bean = new DailyScheduleBean();
@@ -81,9 +84,7 @@ public class MasjidUtility {
 			for(DailyScheduleBean line : lines){
 				
 				Date d = sdf.parse(line.getDate());
-				
-				System.out.println();
-				
+
 				if(d.equals(todayWithZeroTime)){
 					bean = line;
 					break;
@@ -97,28 +98,6 @@ public class MasjidUtility {
 		return bean;
 		
 	}
-	
-//	public List<String> getScheduleByFileName(String fileName)
-//			{		
-//		List<String> lines = null;
-//		Path path = FileSystems.getDefault().getPath(env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/"
-//				, fileName);
-//		try {
-//			lines = Files.readAllLines(path, Charset.defaultCharset() );
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		Iterator<String> it = lines.iterator();
-//		while(it.hasNext()){
-//			String line = (String)it.next();
-//			if(line.startsWith("date")){
-//				it.remove();
-//			}
-//		}		
-//		Collections.sort(lines);
-//		return lines;
-//	}	
 	
 	public List<DailyScheduleBean> getScheduleByFileName2(String fileName)
 	{		
@@ -157,28 +136,33 @@ public class MasjidUtility {
 		 }
 
 		} catch (IOException e) {
-		   e.printStackTrace();
+		  logger.error("Error getting list of files:",e);
 		}
 		return fileNames;
 	}	
 	
 	public void saveScheduleFile(PrayerTimesUpload upload) throws IOException {
 		try {
-			//String fileName = new SimpleDateFormat("yyyyMMddhhmm'.csv'").format(new Date());
+			
 			String fileName = upload.getMonth().toLowerCase()+"-"+PRAYER_TIMES_FILE_NAME;
-			File file = new File(env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/"
-			+ fileName);
+			String path = env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/" + fileName;
+			
+			logger.debug("The prayer times file path: "+path);
+			
+			File file = new File(path);
 			
 			if(!file.exists() && !file.isDirectory())
-			{
+			{				
 			    file.createNewFile();
+			    logger.debug("Created new file");
 			}				
 			 
-			FileUtils.writeByteArrayToFile(file, upload.getPrayerTimesFile().getBytes(),true);
+			FileUtils.writeByteArrayToFile(file, upload.getPrayerTimesFile().getBytes());			
 			
-			System.out.println("Go to the location:  " + file.toString() + " on your computer and verify that the image has been stored.");
+			logger.info("Go to the location:  " + file.toString() + " on your computer and verify that the image has been stored.");
 		} 
 		catch (IOException e) {
+			logger.error("Error saving file:",e);
 			throw e;
 		}
 	}	
