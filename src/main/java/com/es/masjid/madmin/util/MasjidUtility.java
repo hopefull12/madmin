@@ -41,24 +41,33 @@ public class MasjidUtility {
 	public DailyScheduleBean createDailyScheduleBean(String  schedule){
 		DailyScheduleBean bean = new DailyScheduleBean();
 		
-		bean.setDate(schedule.substring(0,8));
+		String[] tokens = schedule.split(",");
+		logger.debug("Tokens: "+tokens.toString());
 		
-		bean.setFajarBeginTime(addSpaceBeforeAMOrPM(schedule.substring(9,15)));
-		bean.setFajarIqamaTime(addSpaceBeforeAMOrPM(schedule.substring(16,22)));
+		bean.setDate(tokens[0]);
 		
-		bean.setSunriseTime(addSpaceBeforeAMOrPM(schedule.substring(23,29)));
+		bean.setFajarBeginTime(addSpaceBeforeAMOrPM(tokens[1]));
+		bean.setFajarIqamaTime(addSpaceBeforeAMOrPM(tokens[2]));
 		
-		bean.setDhuhrTIme(addSpaceBeforeAMOrPM(schedule.substring(30,37)));
-		bean.setDhuhrIqamaTIme(addSpaceBeforeAMOrPM(schedule.substring(38,44)));
+		bean.setSunriseTime(addSpaceBeforeAMOrPM(tokens[3]));
 		
-		bean.setAsrTime(addSpaceBeforeAMOrPM(schedule.substring(45,51)));
-		bean.setAsrIqamaTIme(addSpaceBeforeAMOrPM(schedule.substring(52,58)));
+		bean.setDhuhrTIme(addSpaceBeforeAMOrPM(tokens[4]));
+		bean.setDhuhrIqamaTIme(addSpaceBeforeAMOrPM(tokens[5]));
 		
-		bean.setMaghribTIme(addSpaceBeforeAMOrPM(schedule.substring(59,65)));
-		bean.setMaghribIqamaTIme(addSpaceBeforeAMOrPM(schedule.substring(66,72)));
+		bean.setAsrTime(addSpaceBeforeAMOrPM(tokens[6]));
+		bean.setAsrIqamaTIme(addSpaceBeforeAMOrPM(tokens[7]));
 		
-		bean.setIshaTIme(addSpaceBeforeAMOrPM(schedule.substring(73,79)));
-		bean.setIshaIqamaTIme(addSpaceBeforeAMOrPM(schedule.substring(80,86)));
+		bean.setMaghribTIme(addSpaceBeforeAMOrPM(tokens[8]));
+		bean.setMaghribIqamaTIme(addSpaceBeforeAMOrPM(tokens[9]));
+		
+		bean.setIshaTIme(addSpaceBeforeAMOrPM(tokens[10]));
+		bean.setIshaIqamaTIme(addSpaceBeforeAMOrPM(tokens[11]));		
+		
+		bean.setJumah1Time(tokens[12]);
+		bean.setJumah1IqamaTime(tokens[13]);
+		
+		bean.setJumah2Time(tokens[14]);
+		bean.setJumah2IqamaTime(tokens[15]);
 		return bean;
 	}
 	
@@ -77,14 +86,16 @@ public class MasjidUtility {
 			
 			List<DailyScheduleBean> lines = getScheduleByFileName2(fileName);
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("MMddyyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
 			Date today = new Date();
 			Date todayWithZeroTime =sdf.parse(sdf.format(today));
 			
 			for(DailyScheduleBean line : lines){
 				
 				Date d = sdf.parse(line.getDate());
-
+				
+				System.out.println();
+				
 				if(d.equals(todayWithZeroTime)){
 					bean = line;
 					break;
@@ -99,12 +110,36 @@ public class MasjidUtility {
 		
 	}
 	
+//	public List<String> getScheduleByFileName(String fileName)
+//			{		
+//		List<String> lines = null;
+//		Path path = FileSystems.getDefault().getPath(env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/"
+//				, fileName);
+//		try {
+//			lines = Files.readAllLines(path, Charset.defaultCharset() );
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		Iterator<String> it = lines.iterator();
+//		while(it.hasNext()){
+//			String line = (String)it.next();
+//			if(line.startsWith("date")){
+//				it.remove();
+//			}
+//		}		
+//		Collections.sort(lines);
+//		return lines;
+//	}	
+	
 	public List<DailyScheduleBean> getScheduleByFileName2(String fileName)
 	{		
 		List<String> lines = null;
 		List<DailyScheduleBean> beans = new ArrayList<>();
-		Path path = FileSystems.getDefault().getPath(env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/"
-				, fileName);
+		
+		String filePath = env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/";
+		logger.debug("Reading the PRAYER TIMES FILE with name "+fileName+" from this location: "+filePath);
+		Path path = FileSystems.getDefault().getPath(filePath, fileName);
 		try {
 			lines = Files.readAllLines(path, Charset.defaultCharset() );
 		} catch (IOException e) {
@@ -114,7 +149,9 @@ public class MasjidUtility {
 		Iterator<String> it = lines.iterator();
 		while(it.hasNext()){
 			String line = (String)it.next();
-			if(!line.startsWith("date")){
+			
+			logger.debug("Line: "+line.length());
+			if(!line.startsWith("date") || line.length() < 100){
 				beans.add(createDailyScheduleBean(line));
 			}
 		}		
@@ -122,13 +159,30 @@ public class MasjidUtility {
 		return beans;
 	}	
 	
+	public File getFileByFileName(String fileName){
+		
+		String filePath = env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/" + fileName;
+		
+		return new File(filePath);
+	}
+	
 	
 	
 	public List<String> getScheduleFileNames() {
+		List<String> fileNames = getFileNames("csv");
+		return fileNames;
+	}	
+	
+	public List<String> getMonthlyPrayerTimePDFFileNames() {
+		List<String> fileNames = getFileNames("pdf");
+		return fileNames;
+	}	
+	
+	public List<String> getFileNames(String type) {
 		List<String> fileNames = new ArrayList<>();
 		//Creating a DirectoryStream inside a try-with-resource block
 		try (DirectoryStream<Path> ds = 
-		  Files.newDirectoryStream(FileSystems.getDefault().getPath(env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId()))) {
+		  Files.newDirectoryStream(FileSystems.getDefault().getPath(env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId()),"*."+type)) {
 			
 			for (Path p : ds) {
 		       
@@ -136,7 +190,7 @@ public class MasjidUtility {
 		 }
 
 		} catch (IOException e) {
-		  logger.error("Error getting list of files:",e);
+		   e.printStackTrace();
 		}
 		return fileNames;
 	}	
@@ -162,10 +216,21 @@ public class MasjidUtility {
 			logger.info("Go to the location:  " + file.toString() + " on your computer and verify that the image has been stored.");
 		} 
 		catch (IOException e) {
-			logger.error("Error saving file:",e);
 			throw e;
 		}
 	}	
 	
+	public static void main(String[] args) {
+		
+		
+		
+//		 String[] result = "06012015,3:39 AM,4:50 AM,5:19 AM,12:50 PM,1:30 PM,6:04 PM,6:30 PM,8:21 PM,8:21 PM,10:02 PM,10:20 PM,1:00 PM,1:30 PM,2:00 PM,2:30 PM".split(",");
+//	     for (int x=0; x<result.length; x++)
+//	         System.out.println(result[x]);		
+//	     
+MasjidUtility mu = new MasjidUtility();
+//mu.createDailyScheduleBean("06012015,3:39 AM,4:50 AM,5:19 AM,12:50 PM,1:30 PM,6:04 PM,6:30 PM,8:21 PM,8:21 PM,10:02 PM,10:20 PM,1:00 PM,1:30 PM,2:00 PM,2:30 PM");
+		mu.getTodaysSchedule();
+	}
 
 }

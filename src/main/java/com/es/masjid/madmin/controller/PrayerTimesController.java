@@ -12,9 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,7 +46,7 @@ public class PrayerTimesController implements ServletContextAware{
 	@Resource
 	private Environment env;	
 	
-	@RequestMapping(value={"/", "prayertimescreate"}, method=RequestMethod.GET)
+	@RequestMapping(value={"/prayertimescreate"}, method=RequestMethod.GET)
 	public ModelAndView newShopPage() {
 		
 		String[] months = new DateFormatSymbols().getMonths();		
@@ -54,7 +56,7 @@ public class PrayerTimesController implements ServletContextAware{
 		return mav;
 	}
 	
-	@RequestMapping(value={"/", "prayertimescreate"}, method=RequestMethod.POST)
+	@RequestMapping(value={"/prayertimescreate"}, method=RequestMethod.POST)
 	public ModelAndView createPrayerTimes(@ModelAttribute PrayerTimesUpload upload,
 			BindingResult result,
 			final RedirectAttributes redirectAttributes) {
@@ -81,7 +83,7 @@ public class PrayerTimesController implements ServletContextAware{
 		return mav;		
 	}	
 	
-	@RequestMapping(value={"/", "prayertimesdisplay"}, method=RequestMethod.GET)
+	@RequestMapping(value={"/prayertimesdisplay"}, method=RequestMethod.GET)
 	public ModelAndView displayPrayerTimes(@RequestParam("fileName") String fileName){
 				
 		ModelAndView mv = new ModelAndView("displayPrayerTimes");
@@ -94,7 +96,7 @@ public class PrayerTimesController implements ServletContextAware{
 
 
 	
-	@RequestMapping(value={"/", "dailySchedule"}, method=RequestMethod.GET)
+	@RequestMapping(value={"/dailySchedule"}, method=RequestMethod.GET)
 	public @ResponseBody DailyScheduleBean dailySchedule(){
 				
 //		DailyScheduleBean bean = new DailyScheduleBean();
@@ -106,7 +108,7 @@ public class PrayerTimesController implements ServletContextAware{
 		return bean;
 	}		
 	
-	@RequestMapping(value={"/", "prayerfilesdisplay"}, method=RequestMethod.GET)
+	@RequestMapping(value={"/prayerfilesdisplay"}, method=RequestMethod.GET)
 	public ModelAndView displayPrayerTimeFiles(){
 				
 		ModelAndView mv = new ModelAndView("displayFiles");
@@ -116,7 +118,31 @@ public class PrayerTimesController implements ServletContextAware{
 		
 		return mv;
 	}
+	
+	@RequestMapping(value={"/displayPtPDFFiles"}, method=RequestMethod.GET)
+	public ModelAndView displayMonthlyPDFPrayerTimeFiles(){
+				
+		ModelAndView mv = new ModelAndView("displayMontlyPtPDFFiles");
+		List<String> fileNames = utility.getMonthlyPrayerTimePDFFileNames();		
+		
+		mv.addObject("prayerfiles",fileNames);
+		
+		return mv;
+	}	
+	
+	@RequestMapping(value={"/ptPDFFiles"}, method=RequestMethod.GET)
+	public @ResponseBody List<String> getPrayerTimePDFFiles(){
+						
+		List<String> fileNames = utility.getMonthlyPrayerTimePDFFileNames();				
+		return fileNames;
+	}	
 
+	@RequestMapping(value = "/ptPDFFiles/{fileName}", method = RequestMethod.GET)
+	@ResponseBody
+	public FileSystemResource getFile(@PathVariable("fileName") String fileName) {
+	    return new FileSystemResource(utility.getFileByFileName(fileName+".pdf")); 
+	}	
+	
 	
 	
 	private void saveFile(PrayerTimesUpload upload)
