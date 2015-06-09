@@ -315,15 +315,20 @@
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="prayertimescreate.html">
+												<a href="createPTCSVFile.html">
 													 Upload PrayerTime Files
 												</a>
 											</li>
 											<li>
-												<a href="prayerfilesdisplay.html">
+												<a href="displayPTCSVFiles.html">
 													 List PrayerTime Files
 												</a>
-											</li>										
+											</li>	
+											<li>
+												<a href="displayPtPDFFiles.html">
+													 List PrayerTime PDF Files
+												</a>
+											</li>																				
 										</ul>
 									</li>
 									<li class="nav-parent">
@@ -393,7 +398,7 @@
 									<tbody>
 										<c:forEach var="fileName" items="${prayerfiles}">										
 											<tr>											
-											<td><a href="prayertimesdisplay.html?fileName=${fileName}">${fileName}</a></td>											
+											<td><a target="_blank" href="displayPtPDFFiles/${fileName}">${fileName}</a></td>											
 											</tr>																						
 										</c:forEach>
 									</tbody>

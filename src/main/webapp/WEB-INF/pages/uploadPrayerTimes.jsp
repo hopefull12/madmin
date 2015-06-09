@@ -291,15 +291,20 @@
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="prayertimescreate.html">
+												<a href="createPTCSVFile.html">
 													 Upload PrayerTime Files
 												</a>
 											</li>
 											<li>
-												<a href="prayerfilesdisplay.html">
+												<a href="displayPTCSVFiles.html">
 													 List PrayerTime Files
 												</a>
-											</li>										
+											</li>	
+											<li>
+												<a href="displayPtPDFFiles.html">
+													 List PrayerTime PDF Files
+												</a>
+											</li>																				
 										</ul>
 									</li>
 									<li class="nav-parent">

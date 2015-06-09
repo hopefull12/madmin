@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class NavigationController {
 
-	@RequestMapping(value={"/", "tables"}, method=RequestMethod.GET)
+	@RequestMapping(value={"tables"}, method=RequestMethod.GET)
 	public ModelAndView index() {
 		return new ModelAndView("tables");
 	}

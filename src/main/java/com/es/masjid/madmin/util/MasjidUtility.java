@@ -151,7 +151,7 @@ public class MasjidUtility {
 			String line = (String)it.next();
 			
 			logger.debug("Line: "+line.length());
-			if(!line.startsWith("date") || line.length() < 100){
+			if(!line.startsWith("date") && line.length() > 100){
 				beans.add(createDailyScheduleBean(line));
 			}
 		}		
@@ -170,12 +170,28 @@ public class MasjidUtility {
 	
 	public List<String> getScheduleFileNames() {
 		List<String> fileNames = getFileNames("csv");
-		return fileNames;
+		
+		List<String> names = new ArrayList<>();
+		
+		for(String name: fileNames){
+			
+			names.add(name.substring(0, name.indexOf(".")));
+		}
+		
+		return names;
 	}	
 	
 	public List<String> getMonthlyPrayerTimePDFFileNames() {
 		List<String> fileNames = getFileNames("pdf");
-		return fileNames;
+		
+		List<String> names = new ArrayList<>();
+		
+		for(String name: fileNames){
+			
+			names.add(name.substring(0, name.indexOf(".")));
+		}		
+		
+		return names;
 	}	
 	
 	public List<String> getFileNames(String type) {

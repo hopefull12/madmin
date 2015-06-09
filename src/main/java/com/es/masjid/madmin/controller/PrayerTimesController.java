@@ -1,6 +1,8 @@
 package com.es.masjid.madmin.controller;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormatSymbols;
 import java.util.List;
 
@@ -13,6 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,7 +53,7 @@ public class PrayerTimesController implements ServletContextAware{
 	@Resource
 	private Environment env;	
 	
-	@RequestMapping(value={"/prayertimescreate"}, method=RequestMethod.GET)
+	@RequestMapping(value={"/", "/createPTCSVFile"}, method=RequestMethod.GET)
 	public ModelAndView newShopPage() {
 		
 		String[] months = new DateFormatSymbols().getMonths();		
@@ -56,7 +63,7 @@ public class PrayerTimesController implements ServletContextAware{
 		return mav;
 	}
 	
-	@RequestMapping(value={"/prayertimescreate"}, method=RequestMethod.POST)
+	@RequestMapping(value={"/createPTCSVFile"}, method=RequestMethod.POST)
 	public ModelAndView createPrayerTimes(@ModelAttribute PrayerTimesUpload upload,
 			BindingResult result,
 			final RedirectAttributes redirectAttributes) {
@@ -83,32 +90,8 @@ public class PrayerTimesController implements ServletContextAware{
 		return mav;		
 	}	
 	
-	@RequestMapping(value={"/prayertimesdisplay"}, method=RequestMethod.GET)
-	public ModelAndView displayPrayerTimes(@RequestParam("fileName") String fileName){
-				
-		ModelAndView mv = new ModelAndView("displayPrayerTimes");
-		
-		List<DailyScheduleBean> lines = utility.getScheduleByFileName2(fileName);
-		mv.addObject("prayertimes",lines);
-		
-		return mv;
-	}
-
-
 	
-	@RequestMapping(value={"/dailySchedule"}, method=RequestMethod.GET)
-	public @ResponseBody DailyScheduleBean dailySchedule(){
-				
-//		DailyScheduleBean bean = new DailyScheduleBean();
-//		bean.setFajarBeginTime("5:45am");
-//		bean.setFajarIqamaTime("6:00am");
-		
-		DailyScheduleBean bean = utility.getTodaysSchedule();
-		
-		return bean;
-	}		
-	
-	@RequestMapping(value={"/prayerfilesdisplay"}, method=RequestMethod.GET)
+	@RequestMapping(value={"/displayPTCSVFiles"}, method=RequestMethod.GET)
 	public ModelAndView displayPrayerTimeFiles(){
 				
 		ModelAndView mv = new ModelAndView("displayFiles");
@@ -117,7 +100,27 @@ public class PrayerTimesController implements ServletContextAware{
 		mv.addObject("prayerfiles",fileNames);
 		
 		return mv;
+	}	
+	
+	@RequestMapping(value={"/displayPTCSVFiles/{fileName}"}, method=RequestMethod.GET)
+	public ModelAndView displayPrayerTimes(@PathVariable("fileName") String fileName){
+				
+		ModelAndView mv = new ModelAndView("displayPrayerTimes");
+		
+		List<DailyScheduleBean> lines = utility.getScheduleByFileName2(fileName+".csv");
+		mv.addObject("prayertimes",lines);
+		
+		return mv;
 	}
+
+
+	
+	@RequestMapping(value={"/dailySchedule"}, method=RequestMethod.GET)
+	public @ResponseBody DailyScheduleBean dailySchedule(){	
+		DailyScheduleBean bean = utility.getTodaysSchedule();
+		return bean;
+	}		
+
 	
 	@RequestMapping(value={"/displayPtPDFFiles"}, method=RequestMethod.GET)
 	public ModelAndView displayMonthlyPDFPrayerTimeFiles(){
@@ -128,6 +131,21 @@ public class PrayerTimesController implements ServletContextAware{
 		mv.addObject("prayerfiles",fileNames);
 		
 		return mv;
+	}	
+	
+	@RequestMapping(value = "/displayPtPDFFiles/{fileName}", method = RequestMethod.GET)
+	public ResponseEntity<InputStreamResource> downloadPDFFile(@PathVariable("fileName") String fileName)
+	                                                                  throws IOException {
+		
+		InputStream is = new FileInputStream(utility.getFileByFileName(fileName+".pdf"));
+		
+	    HttpHeaders respHeaders = new HttpHeaders();
+	    respHeaders.setContentType(MediaType.parseMediaType("application/pdf"));
+	    respHeaders.setContentLength(12345678);
+	    respHeaders.setContentDispositionFormData("attachment", fileName);
+
+	    InputStreamResource isr = new InputStreamResource(is);
+	    return new ResponseEntity<InputStreamResource>(isr, respHeaders, HttpStatus.OK);
 	}	
 	
 	@RequestMapping(value={"/ptPDFFiles"}, method=RequestMethod.GET)

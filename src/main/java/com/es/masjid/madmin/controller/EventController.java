@@ -10,6 +10,7 @@ public class EventController {
 	
 	@RequestMapping(value={"/event", "event"}, method=RequestMethod.GET)
 	public ModelAndView index() {
+		System.out.println();
 		return new ModelAndView("event");
 	}		
 
