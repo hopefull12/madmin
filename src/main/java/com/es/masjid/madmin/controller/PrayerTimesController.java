@@ -84,7 +84,7 @@ public class PrayerTimesController implements ServletContextAware{
 		String message = "Prayertimes has been successfully created.";
 		
 		//shopService.create(shop);
-		mav.setViewName("redirect:/prayerfilesdisplay.html");
+		mav.setViewName("redirect:/displayPTCSVFiles.html");
 				
 		redirectAttributes.addFlashAttribute("message", message);	
 		return mav;		

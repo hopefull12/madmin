@@ -363,7 +363,7 @@
 
 						<div class="col-md-12">
 							
-							<form:form id="form2" cssClass="form-horizontal form-bordered" method="POST" commandName="prayerTimes"  enctype="multipart/form-data">
+							<form:form id="form2" action="createPTCSVFile" cssClass="form-horizontal form-bordered" method="POST" commandName="prayerTimes"  enctype="multipart/form-data">
 								<section class="panel">
 									<header class="panel-heading">
 										<div class="panel-actions">

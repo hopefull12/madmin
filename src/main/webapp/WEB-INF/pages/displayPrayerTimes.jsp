@@ -74,7 +74,7 @@
 			<header class="header">
 				<div class="logo-container">
 					<a href="../" class="logo">
-						<img src="assets/images/logo.png" height="35" alt="Porto Admin" />
+						<img src="${pageContext.request.contextPath}/assets/images/logo.png" height="35" alt="Porto Admin" />
 					</a>
 					<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
 						<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
@@ -389,7 +389,7 @@
 							</header>
 							
 							<div class="panel-body">																	
-								<a href="prayerfilesdisplay.html">Back to List of files</a>
+								<a href="prayerfilesdisplay.html">Back to List of files ${pageContext.request.contextPath}</a>
 							</div>							
 							
 							<div class="panel-body">

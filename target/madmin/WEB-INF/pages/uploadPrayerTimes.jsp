@@ -291,15 +291,20 @@
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="prayertimescreate.html">
+												<a href="createPTCSVFile.html">
 													 Upload PrayerTime Files
 												</a>
 											</li>
 											<li>
-												<a href="prayerfilesdisplay.html">
+												<a href="displayPTCSVFiles.html">
 													 List PrayerTime Files
 												</a>
-											</li>										
+											</li>	
+											<li>
+												<a href="displayPtPDFFiles.html">
+													 List PrayerTime PDF Files
+												</a>
+											</li>																				
 										</ul>
 									</li>
 									<li class="nav-parent">
@@ -358,7 +363,7 @@
 
 						<div class="col-md-12">
 							
-							<form:form id="form2" cssClass="form-horizontal form-bordered" method="POST" commandName="prayerTimes"  enctype="multipart/form-data">
+							<form:form id="form2" action="createPTCSVFile" cssClass="form-horizontal form-bordered" method="POST" commandName="prayerTimes"  enctype="multipart/form-data">
 								<section class="panel">
 									<header class="panel-heading">
 										<div class="panel-actions">
