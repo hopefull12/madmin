@@ -142,7 +142,7 @@ public class PrayerTimesController implements ServletContextAware{
 	    HttpHeaders respHeaders = new HttpHeaders();
 	    respHeaders.setContentType(MediaType.parseMediaType("application/pdf"));
 	    respHeaders.setContentLength(12345678);
-	    respHeaders.setContentDispositionFormData("attachment", fileName);
+	    respHeaders.setContentDispositionFormData("attachment", fileName+".pdf");
 
 	    InputStreamResource isr = new InputStreamResource(is);
 	    return new ResponseEntity<InputStreamResource>(isr, respHeaders, HttpStatus.OK);
@@ -155,6 +155,12 @@ public class PrayerTimesController implements ServletContextAware{
 		return fileNames;
 	}	
 
+//	@RequestMapping(value = "/ptPDFFiles/{fileName}", method = RequestMethod.GET)
+//	@ResponseBody
+//	public FileSystemResource getFile(@PathVariable("fileName") String fileName) {
+//	    return new FileSystemResource(utility.getFileByFileName(fileName+".pdf")); 
+//	}	
+	
 	@RequestMapping(value = "/ptPDFFiles/{fileName}", method = RequestMethod.GET)
 	@ResponseBody
 	public FileSystemResource getFile(@PathVariable("fileName") String fileName) {
