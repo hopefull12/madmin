@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.es.masjid.madmin.model.DailyScheduleBean;
 import com.es.masjid.madmin.model.PrayerTimesUpload;
@@ -212,9 +213,38 @@ public class MasjidUtility {
 	}	
 	
 	public void saveScheduleFile(PrayerTimesUpload upload) throws IOException {
+		
+		String fileName = upload.getMonth().toLowerCase()+"-"+PRAYER_TIMES_FILE_NAME;
+		saveFile(fileName, upload.getPrayerTimesFile());
+		
+//		try {
+//			
+//			//String fileName = upload.getMonth().toLowerCase()+"-"+PRAYER_TIMES_FILE_NAME;
+//			String path = env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/" + fileName;
+//			
+//			logger.debug("The prayer times file path: "+path);
+//			
+//			File file = new File(path);
+//			
+//			if(!file.exists() && !file.isDirectory())
+//			{				
+//			    file.createNewFile();
+//			    logger.debug("Created new file");
+//			}				
+//			 
+//			FileUtils.writeByteArrayToFile(file, upload.getPrayerTimesFile().getBytes());			
+//			
+//			logger.info("Go to the location:  " + file.toString() + " on your computer and verify that the image has been stored.");
+//		} 
+//		catch (IOException e) {
+//			throw e;
+//		}
+	}	
+	
+	public void saveFile(String fileName, MultipartFile multiPartFile) throws IOException {
 		try {
 			
-			String fileName = upload.getMonth().toLowerCase()+"-"+PRAYER_TIMES_FILE_NAME;
+			//String fileName = upload.getMonth().toLowerCase()+"-"+PRAYER_TIMES_FILE_NAME;
 			String path = env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/" + fileName;
 			
 			logger.debug("The prayer times file path: "+path);
@@ -227,14 +257,14 @@ public class MasjidUtility {
 			    logger.debug("Created new file");
 			}				
 			 
-			FileUtils.writeByteArrayToFile(file, upload.getPrayerTimesFile().getBytes());			
+			FileUtils.writeByteArrayToFile(file, multiPartFile.getBytes());			
 			
 			logger.info("Go to the location:  " + file.toString() + " on your computer and verify that the image has been stored.");
 		} 
 		catch (IOException e) {
 			throw e;
 		}
-	}	
+	}		
 	
 	public static void main(String[] args) {
 		

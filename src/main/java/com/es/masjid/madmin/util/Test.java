@@ -12,5 +12,9 @@ public class Test {
 		//Date d = sdf.format(new Date());
 		//d.get
 		System.out.println(sdf.parse(dateInString));
+		
+		String fileNameSuffix = new SimpleDateFormat("yyyyMMd-hhmmss").format(new Date());
+		
+		System.out.println(fileNameSuffix);
 	}
 }
