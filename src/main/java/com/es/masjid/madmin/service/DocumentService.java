@@ -14,5 +14,7 @@ public interface DocumentService {
 	List<Document> findAll();
 	
 	File getFileByFileName(String fileName);
+	
+	List<Document> getValidDocuments();
 
 }

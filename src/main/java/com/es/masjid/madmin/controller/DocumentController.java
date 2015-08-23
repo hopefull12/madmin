@@ -1,5 +1,6 @@
 package com.es.masjid.madmin.controller;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +37,13 @@ public class DocumentController {
 	public ModelAndView displayCreateFile() {
 		
 		String[] categories = {"PrayerTimes","Ramadan","Misc"};		
+		String[] fileTypes = {"PDF", "CSV"};
+		String[] months = new DateFormatSymbols().getMonths();
 				
 		ModelAndView mav = new ModelAndView("uploadDocument", "docBean", new DocumentBean());
 		mav.addObject("categories",categories);
+		mav.addObject("months",months);
+		mav.addObject("fileTypes", fileTypes);
 		return mav;
 	}	
 	
@@ -101,7 +106,7 @@ public class DocumentController {
 	@RequestMapping(value={"/uploadedFiles"}, method=RequestMethod.GET)
 	public @ResponseBody UploadedFilesBean getAllFiles(){
 						
-		List<Document> docs = docService.findAll();
+		List<Document> docs = docService.getValidDocuments();
 		List<String[]> prayerFiles = new ArrayList<>();
 		List<String[]> ramadanFiles = new ArrayList<>();
 		List<String[]> miscFiles = new ArrayList<>();		
@@ -129,7 +134,7 @@ public class DocumentController {
 		return bean;
 	}	
 	
-	@RequestMapping(value = "/uploadedFiles/{fileName}", method = RequestMethod.GET)
+	@RequestMapping(value = "/uploadedFiles/{fileName}/", method = RequestMethod.GET)
 	@ResponseBody
 	public FileSystemResource getFile(@PathVariable("fileName") String fileName) {
 	    return new FileSystemResource(docService.getFileByFileName(fileName)); 

@@ -396,9 +396,32 @@
 										<div class="form-group">
 												<label class="col-sm-4 control-label" for="inputSuccess">Select Category</label>
 												<div class="col-sm-8">												
-													<form:select path="category" items="${categories}"/>
+													<form:select id="fileCategory" path="category">
+														<form:option value="">&nbsp;</form:option>
+														<form:options items="${categories}" />													
+													</form:select>
 												</div>
-										</div>										
+										</div>				
+										
+										<div class="form-group pt-field">
+												<label class="col-sm-4 control-label" for="inputSuccess">File Type</label>
+												<div class="col-sm-8">												
+													<form:select path="fileType">
+														<form:option value="">&nbsp;</form:option>
+														<form:options items="${fileTypes}" />
+													</form:select>
+												</div>
+										</div>
+										
+										<div class="form-group pt-field">
+												<label class="col-sm-4 control-label" for="inputSuccess">Prayer times for which Month</label>
+												<div class="col-sm-8">												
+													<form:select path="month">
+														<form:option value="">&nbsp;</form:option>
+														<form:options items="${months}" />													
+													</form:select>
+												</div>
+										</div>																
 										
 										
 										<div class="form-group">
@@ -419,7 +442,21 @@
 													</div>
 												</div>
 											</div>
-										</div>																							
+										</div>																				
+										
+										<div class="form-group">
+												<label class="col-sm-4 control-label" for="inputSuccess">Valid From</label>
+												<div class="col-sm-8">												
+													<form:input path="validFrom" />
+												</div>
+										</div>																					
+										
+										<div class="form-group">
+												<label class="col-sm-4 control-label" for="inputSuccess">Valid To</label>
+												<div class="col-sm-8">												
+													<form:input path="validTo" />
+												</div>
+										</div>																																									
 										
 									</div>
 									<footer class="panel-footer">
@@ -430,6 +467,8 @@
 							</form:form>
 						</div>
 					</div>
+					
+
 
 
 					<!-- end: page -->
@@ -526,6 +565,27 @@
 		
 		<!-- Theme Initialization Files -->
 		<script src="assets/javascripts/theme.init.js"></script>
+		
+		<script type="text/javascript">
+		
+		$(function(){
+			
+			$(".pt-field").each(function(){ $(this).hide()});
+			
+			$("#fileCategory").change(function(){
+				
+				console.log($(this).val());
+				if($(this).val() === "PrayerTimes"){
+					$(".pt-field").each(function(){ $(this).show()})
+				} else {
+					$(".pt-field").each(function(){ $(this).hide()});
+				}
+				
+			})
+			
+		})
+		
+		</script>		
 
 	</body>
 </html>

@@ -45,6 +45,10 @@ public class DocumentServiceImpl implements DocumentService {
 		return documentRepository.findAll();
 	}
 	
+	public List<Document> getValidDocuments() {
+		return documentRepository.getValidDocuments();
+	}
+	
 	/**
 	 * All the files except .csv prayer schedule files are created by this method
 	 */
@@ -58,6 +62,8 @@ public class DocumentServiceImpl implements DocumentService {
 		doc.setDisplayName(bean.getDisplayFileName());
 		doc.setName(fileNameSuffix+ "-" +bean.getFile().getOriginalFilename());
 		doc.setCategory(bean.getCategory());
+		doc.setValidFrom(bean.getValidFrom());
+		doc.setValidTo(bean.getValidTo());
 		documentRepository.save(doc);
 		logger.debug("Successfully saved file "+bean.getFile().getName()+" meta-data  to file Database");
 		
@@ -70,7 +76,7 @@ public class DocumentServiceImpl implements DocumentService {
 	 * All the uploaded PDF files are retreived using below method for download or reading
 	 */
 	public File getFileByFileName(String fileName){
-		fileName = fileName + ".pdf";
+		//fileName = fileName + ".pdf";
 		return utility.getFileByFileName(fileName);
 	}
 }

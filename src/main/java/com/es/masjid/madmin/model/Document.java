@@ -1,5 +1,7 @@
 package com.es.masjid.madmin.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +27,12 @@ public class Document {
 	
 	@Column(name = "sort_order")
 	private Integer sortOrder=1;
+	
+	@Column(name = "valid_from")
+	private Date validFrom;
+	
+	@Column(name = "valid_to")
+	private Date validTo;
 	
 	public Integer getId() {
 		return id;
@@ -56,6 +64,20 @@ public class Document {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+	public Date getValidFrom() {
+		return validFrom;
+	}
+	public void setValidFrom(Date validFrom) {
+		this.validFrom = validFrom;
+	}
+	public Date getValidTo() {
+		return validTo;
+	}
+	public void setValidTo(Date validTo) {
+		this.validTo = validTo;
+	}
+
+	
 	
 	
 }

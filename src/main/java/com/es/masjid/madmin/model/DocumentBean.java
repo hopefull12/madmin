@@ -11,8 +11,17 @@ public class DocumentBean {
 	private String month;
 	private String displayFileName;
 	private String category;
+	private String fileType;
 	private MultipartFile file;
+	
+	
+	public String getFileType() {
+		return fileType;
+	}
 
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
 
 	public Date getValidFrom() {
 		return validFrom;
