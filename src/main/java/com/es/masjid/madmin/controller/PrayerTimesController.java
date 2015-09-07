@@ -58,7 +58,7 @@ public class PrayerTimesController implements ServletContextAware{
 		
 		String[] months = new DateFormatSymbols().getMonths();		
 				
-		ModelAndView mav = new ModelAndView("uploadPrayerTimes", "prayerTimes", new PrayerTimesUpload());
+		ModelAndView mav = new ModelAndView("uploadPrayerTimesTile", "prayerTimes", new PrayerTimesUpload());
 		mav.addObject("months",months);
 		return mav;
 	}

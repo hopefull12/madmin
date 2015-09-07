@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<!-- Layouts Start -->
+	<definition name="baseTile" template="/WEB-INF/pages/homelayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/pages/header.jsp" />
+		<put-attribute name="left-aside" value="/WEB-INF/pages/left-aside.jsp" />
+		<put-attribute name="right-aside" value="/WEB-INF/pages/right-aside.jsp" />
+	</definition>	
+	
+	<!-- 
+	<definition name="baseTestTile" template="/WEB-INF/layout/testLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/pages/testHeader.jsp" />
+		<put-attribute name="left-aside" value="/WEB-INF/pages/testFooter.jsp" />	
+		<put-attribute name="right-aside" value="/WEB-INF/pages/testFooter.jsp" />
+	</definition>	 -->
+	<!-- Layouts End -->
+	
+	<definition name="uploadPrayerTimesTile" extends="baseTile">
+		<put-attribute name="body" value="/WEB-INF/pages/uploadPrayerTimes.jsp" />
+	</definition>	
+	
+	<!-- 
+	<definition name="homeTile" extends="baseTile">
+		<put-attribute name="body" value="/WEB-INF/home.jsp" />
+	</definition>	
+	
+	<definition name="onlyPrayerTimesTile" extends="baseTile">
+		<put-attribute name="header" value="/WEB-INF/emptyHeader.jsp" />
+		<put-attribute name="body" value="/WEB-INF/onlyPrayerTimes.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/emptyFooter.jsp" />
+	</definition>	
+	
+	 Ajax Tiles
+	<definition name="contactUsAjaxTile" template="/WEB-INF/ajax/contactUsAjax.jsp">		
+	</definition>	
+	 -->
+
+</tiles-definitions>
