@@ -87,6 +87,27 @@
 		
 		<!-- Theme Initialization Files -->
 		<script src="assets/javascripts/theme.init.js"></script>
+		
+		<script type="text/javascript">
+		
+		$(function(){
+			
+			$(".pt-field").each(function(){ $(this).hide()});
+			
+			$("#fileCategory").change(function(){
+				
+				console.log($(this).val());
+				if($(this).val() === "PrayerTimes"){
+					$(".pt-field").each(function(){ $(this).show()})
+				} else {
+					$(".pt-field").each(function(){ $(this).hide()});
+				}
+				
+			})
+			
+		})
+		
+		</script>			
 
 	</body>
 </html>

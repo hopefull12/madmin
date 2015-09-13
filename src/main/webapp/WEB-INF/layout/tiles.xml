@@ -7,7 +7,7 @@
 	<definition name="baseTile" template="/WEB-INF/pages/homelayout.jsp">
 		<put-attribute name="header" value="/WEB-INF/pages/header.jsp" />
 		<put-attribute name="left-aside" value="/WEB-INF/pages/left-aside.jsp" />
-		<put-attribute name="right-aside" value="/WEB-INF/pages/right-aside.jsp" />
+		<put-attribute name="right-aside" value="/WEB-INF/pages/right-aside-empty.jsp" />
 	</definition>	
 	
 	<!-- 
@@ -22,11 +22,24 @@
 		<put-attribute name="body" value="/WEB-INF/pages/uploadPrayerTimes.jsp" />
 	</definition>	
 	
-	<!-- 
-	<definition name="homeTile" extends="baseTile">
-		<put-attribute name="body" value="/WEB-INF/home.jsp" />
+	<definition name="uploadDocumentTile" extends="baseTile">
+		<put-attribute name="body" value="/WEB-INF/pages/uploadDocument.jsp" />
 	</definition>	
 	
+	
+	<definition name="displayUploadedDocumentsTile" extends="baseTile">
+		<put-attribute name="body" value="/WEB-INF/pages/displayUploadedFiles.jsp" />
+	</definition>	
+	
+	<definition name="displayCSVFilesTile" extends="baseTile">
+		<put-attribute name="body" value="/WEB-INF/pages/displayCSVFiles.jsp" />
+	</definition>	
+	
+	<definition name="displayPrayerTimesTile" extends="baseTile">
+		<put-attribute name="body" value="/WEB-INF/pages/displayPrayerTimes.jsp" />
+	</definition>
+		
+	<!-- 
 	<definition name="onlyPrayerTimesTile" extends="baseTile">
 		<put-attribute name="header" value="/WEB-INF/emptyHeader.jsp" />
 		<put-attribute name="body" value="/WEB-INF/onlyPrayerTimes.jsp" />

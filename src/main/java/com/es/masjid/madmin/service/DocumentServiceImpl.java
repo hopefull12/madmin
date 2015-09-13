@@ -79,4 +79,9 @@ public class DocumentServiceImpl implements DocumentService {
 		//fileName = fileName + ".pdf";
 		return utility.getFileByFileName(fileName);
 	}
+
+	@Override
+	public void deleteDocument(Integer id) {
+		documentRepository.delete(id);		
+	}
 }

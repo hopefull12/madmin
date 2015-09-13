@@ -1,6 +1,8 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Form Layouts</h2>
+						<h2>Upload Prayer Time Files</h2>
 					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
@@ -9,8 +11,7 @@
 										<i class="fa fa-home"></i>
 									</a>
 								</li>
-								<li><span>Forms</span></li>
-								<li><span>Layouts</span></li>
+								
 							</ol>
 					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -30,11 +31,7 @@
 											<a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
 										</div>
 
-										<h2 class="panel-title">Bordered Form</h2>
-
-										<p class="panel-subtitle">
-											Use <code>.form-bordered</code> class to style horizontal fields with borders.
-										</p>
+										
 									</header>
 									<div class="panel-body">
 									

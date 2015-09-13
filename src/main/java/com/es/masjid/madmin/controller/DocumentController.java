@@ -1,5 +1,9 @@
 package com.es.masjid.madmin.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,7 +49,7 @@ public class DocumentController {
 		String[] fileTypes = {"PDF", "CSV"};
 		String[] months = new DateFormatSymbols().getMonths();
 				
-		ModelAndView mav = new ModelAndView("uploadDocument", "docBean", new DocumentBean());
+		ModelAndView mav = new ModelAndView("uploadDocumentTile", "docBean", new DocumentBean());
 		mav.addObject("categories",categories);
 		mav.addObject("months",months);
 		mav.addObject("fileTypes", fileTypes);
@@ -48,12 +57,12 @@ public class DocumentController {
 	}	
 	
 	@RequestMapping(value={"/createFile"}, method=RequestMethod.POST)
-	public ModelAndView createPrayerTimes(@ModelAttribute DocumentBean docBean,
+	public ModelAndView createFile(@ModelAttribute DocumentBean docBean,
 			BindingResult result,
 			final RedirectAttributes redirectAttributes) {
 		
 		if (result.hasErrors())
-			return new ModelAndView("prayertimescreate");
+			return new ModelAndView("uploadDocumentTile");
 		
 		logger.debug("Getting ready to save the file....");
 		try {
@@ -68,40 +77,64 @@ public class DocumentController {
 		String message = "Prayertimes has been successfully created.";
 		
 		//shopService.create(shop);
-		mav.setViewName("redirect:/createFile");
+		mav.setViewName("redirect:/displayFiles.html");
 				
 		redirectAttributes.addFlashAttribute("message", message);	
 		return mav;		
 	}		
 	
-	@RequestMapping(value={"/displayFiles"}, method=RequestMethod.GET)
+	@RequestMapping(value={"/", "/displayFiles"}, method=RequestMethod.GET)
 	public ModelAndView displayFiles(){
 				
-		ModelAndView mv = new ModelAndView("displayUploadedFiles");
-		
+		ModelAndView mv = new ModelAndView("displayUploadedDocumentsTile");
 		List<Document> docs = docService.findAll();
-		
-//		List<String> prayerFiles = new ArrayList<>();
-//		List<String> ramadanFiles = new ArrayList<>();
-//		List<String> miscFiles = new ArrayList<>();
-//		
-//		for(Document doc : docs){
-//			
-//			if("PrayerTimes".equals(doc.getCategory())){
-//				
-//			} else if("Ramadan".equals(doc.getCategory())){
-//				
-//			} else if("Misc".equals(doc.getCategory())){
-//				
-//			}
-//			
-//		}
-		//List<String> fileNames = utility.getMonthlyPrayerTimePDFFileNames();		
-		
 		mv.addObject("uploadedfiles",docs);
 		
 		return mv;
 	}	
+	
+	@RequestMapping(value = "/displayFiles/{fileName}/", method = RequestMethod.GET)
+	public ResponseEntity<InputStreamResource> displayFile(@PathVariable("fileName") String fileName)
+	                                                                  throws IOException {
+		File f = docService.getFileByFileName(fileName);
+		InputStream is = new FileInputStream(f);
+		
+		String fileExt = fileName.substring(fileName.indexOf("."), fileName.length());
+		String mimeTypeToUse = null;
+		System.out.println("The file ext is: "+fileExt);
+		
+		if(".pdf".equals(fileExt)){
+			mimeTypeToUse = "application/pdf";
+		}else if(".docx".equals(fileExt)){
+			mimeTypeToUse = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+		}else if(".pptx".equals(fileExt)){
+			mimeTypeToUse = "application/vnd.ms-excel";
+		}else if(".csv".equals(fileExt)){
+			mimeTypeToUse = "text/csv";
+		}		
+		
+	    HttpHeaders respHeaders = new HttpHeaders();
+	    respHeaders.setContentType(MediaType.parseMediaType(mimeTypeToUse));
+	    respHeaders.setContentLength(f.length());
+	    if(".csv".equals(fileExt) || ".docx".equals(fileExt)){
+	    	respHeaders.setContentDispositionFormData("attachment", fileName);
+	    }
+
+	    InputStreamResource isr = new InputStreamResource(is);
+	    return new ResponseEntity<InputStreamResource>(isr, respHeaders, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/deleteDocument/{id}/", method = RequestMethod.GET)
+	public ModelAndView deleteDocuments(@PathVariable("id") Integer id){
+		docService.deleteDocument(id);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/displayFiles.html");
+		return mav;
+	}
+	
+	/**
+	 * Document REST API
+	 */
 	
 	@RequestMapping(value={"/uploadedFiles"}, method=RequestMethod.GET)
 	public @ResponseBody UploadedFilesBean getAllFiles(){

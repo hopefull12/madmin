@@ -16,5 +16,7 @@ public interface DocumentService {
 	File getFileByFileName(String fileName);
 	
 	List<Document> getValidDocuments();
+	
+	void deleteDocument(Integer id);
 
 }

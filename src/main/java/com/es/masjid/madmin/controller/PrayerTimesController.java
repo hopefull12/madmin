@@ -53,7 +53,7 @@ public class PrayerTimesController implements ServletContextAware{
 	@Resource
 	private Environment env;	
 	
-	@RequestMapping(value={"/", "/createPTCSVFile"}, method=RequestMethod.GET)
+	@RequestMapping(value={"/createPTCSVFile"}, method=RequestMethod.GET)
 	public ModelAndView newShopPage() {
 		
 		String[] months = new DateFormatSymbols().getMonths();		
@@ -94,7 +94,7 @@ public class PrayerTimesController implements ServletContextAware{
 	@RequestMapping(value={"/displayPTCSVFiles"}, method=RequestMethod.GET)
 	public ModelAndView displayPrayerTimeFiles(){
 				
-		ModelAndView mv = new ModelAndView("displayFiles");
+		ModelAndView mv = new ModelAndView("displayCSVFilesTile");
 		List<String> fileNames = utility.getScheduleFileNames();		
 		
 		mv.addObject("prayerfiles",fileNames);
@@ -105,7 +105,7 @@ public class PrayerTimesController implements ServletContextAware{
 	@RequestMapping(value={"/displayPTCSVFiles/{fileName}"}, method=RequestMethod.GET)
 	public ModelAndView displayPrayerTimes(@PathVariable("fileName") String fileName){
 				
-		ModelAndView mv = new ModelAndView("displayPrayerTimes");
+		ModelAndView mv = new ModelAndView("displayPrayerTimesTile");
 		
 		List<DailyScheduleBean> lines = utility.getScheduleByFileName2(fileName+".csv");
 		mv.addObject("prayertimes",lines);
