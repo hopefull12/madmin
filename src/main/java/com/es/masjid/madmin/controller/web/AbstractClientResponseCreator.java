@@ -20,7 +20,7 @@ public class AbstractClientResponseCreator implements ClientResponseCreator{
     protected GenericItemService genericItemService;
     protected List<Map<String, String>> clientResponse = new LinkedList<>();
 
-    protected static String BASE_URL = "http://localhost:8080/madmin/";
+    protected static String BASE_URL = "http://www.yahibaba.com/madmin/";
 
 
     public AbstractClientResponseCreator(GenericItemService genericItemService){
