@@ -24,26 +24,26 @@
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
 
 		<!-- Vendor CSS -->
-		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.css" />
 
-		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
-		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
-		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 		
 		<!-- Specific Page Vendor CSS -->
-		<link rel="stylesheet" href="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />		
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />		
 
 		<!-- Theme CSS -->
-		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/stylesheets/theme.css" />
 
 		<!-- Skin CSS -->
-		<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/stylesheets/skins/default.css" />
 
 		<!-- Theme Custom CSS -->
-		<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/stylesheets/theme-custom.css">
 
 		<!-- Head Libs -->
-		<script src="assets/vendor/modernizr/modernizr.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/vendor/modernizr/modernizr.js"></script>
 	</head>
 	<body>
 		<section class="body">
@@ -67,26 +67,26 @@
 		</section>
 
 		<!-- Vendor -->
-		<script src="assets/vendor/jquery/jquery.js"></script>
-		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
-		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
-		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
-		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
-		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/vendor/jquery/jquery.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/vendor/magnific-popup/magnific-popup.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 		
 		<!-- Specific Page Vendor -->
-		<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
-		<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>		
+		<script src="${pageContext.request.contextPath}/assets/vendor/jquery-autosize/jquery.autosize.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>		
 		
 		<!-- Theme Base, Components and Settings -->
-		<script src="assets/javascripts/theme.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/javascripts/theme.js"></script>
 		
 		<!-- Theme Custom -->
-		<script src="assets/javascripts/theme.custom.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/javascripts/theme.custom.js"></script>
 		
 		<!-- Theme Initialization Files -->
-		<script src="assets/javascripts/theme.init.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/javascripts/theme.init.js"></script>
 		
 		<script type="text/javascript">
 		

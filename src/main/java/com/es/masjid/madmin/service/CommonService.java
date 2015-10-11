@@ -10,5 +10,7 @@ public interface CommonService {
 	void create(NewsItem bean) throws IOException;
 	
 	List<NewsItem> findAll();	
+	
+	
 
 }

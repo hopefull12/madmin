@@ -20,17 +20,35 @@
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="createPTCSVFile">
+												<a href="${pageContext.request.contextPath}/createPTCSVFile">
 													 Upload Prayer Times CSV File
 												</a>
 											</li>
 											<li>
-												<a href="displayPTCSVFiles">
+												<a href="${pageContext.request.contextPath}/displayPTCSVFiles">
 													 Manage Prayer Time CSV Files
 												</a>
 											</li>																														
 										</ul>
-									</li>											
+									</li>		
+									<li class="nav-parent nav-expanded nav-active">
+										<a>
+											<i class="fa fa-copy" aria-hidden="true"></i>
+											<span>News Items </span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="${pageContext.request.contextPath}/item/news/create">
+													 Add News Item
+												</a>
+											</li>
+											<li>
+												<a href="${pageContext.request.contextPath}/item/news">
+													 Manage News Items
+												</a>
+											</li>																														
+										</ul>
+									</li>																		
 									<li class="nav-parent nav-expanded nav-active">
 										<a>
 											<i class="fa fa-copy" aria-hidden="true"></i>
@@ -38,12 +56,12 @@
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="createFile.html">
+												<a href="${pageContext.request.contextPath}/createFile.html">
 													 Upload Document
 												</a>
 											</li>
 											<li>
-												<a href="displayFiles.html">
+												<a href="${pageContext.request.contextPath}/displayFiles.html">
 													 Manage Documents
 												</a>
 											</li>																														

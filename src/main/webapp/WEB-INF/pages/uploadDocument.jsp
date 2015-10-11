@@ -83,8 +83,8 @@
 										</div>		
 										
 										<div class="form-group">
-											<label class="col-md-3 control-label">File Valid Dates</label>
-											<div class="col-md-6">
+											<label class="col-sm-4 control-label">File Valid Dates</label>
+											<div class="col-sm-8">
 												<div class="input-daterange input-group" data-plugin-datepicker>
 													<span class="input-group-addon">
 														<i class="fa fa-calendar"></i>

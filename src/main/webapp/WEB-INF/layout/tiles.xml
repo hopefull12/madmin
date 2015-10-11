@@ -38,6 +38,14 @@
 	<definition name="displayPrayerTimesTile" extends="baseTile">
 		<put-attribute name="body" value="/WEB-INF/pages/displayPrayerTimes.jsp" />
 	</definition>
+	
+	<definition name="createNewsItemTile" extends="baseTile">
+		<put-attribute name="body" value="/WEB-INF/pages/createNewsItem.jsp" />
+	</definition>	
+	
+	<definition name="displayAllNewsItemsTile" extends="baseTile">
+		<put-attribute name="body" value="/WEB-INF/pages/displayNewsItems.jsp" />
+	</definition>		
 		
 	<!-- 
 	<definition name="onlyPrayerTimesTile" extends="baseTile">
