@@ -4,6 +4,9 @@ public enum ItemType {
 	
 	NEWS,
 	EVENT,
-	DOCUMENT;
+    ADS,
+	DOWNLOADDOC,
+    PT_PDF,
+    PT_CSV;
 
 }

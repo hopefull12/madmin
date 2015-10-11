@@ -1,16 +1,15 @@
 package com.es.masjid.madmin.service;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.es.masjid.madmin.model.Category;
 import com.es.masjid.madmin.model.Item;
 import com.es.masjid.madmin.model.ItemType;
 import com.es.masjid.madmin.repository.ItemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 @Component
 public class ItemServiceImpl implements ItemService{
@@ -21,7 +20,7 @@ public class ItemServiceImpl implements ItemService{
 	@Transactional
 	public void createItem(Item item) {	
 		
-		item.setType(ItemType.NEWS);
+		item.setItemType(ItemType.NEWS);
 		item.setCategory(Category.NONE);
 		item.setCreatedBy("default");
 		item.setModifiedBy("default");

@@ -1,14 +1,10 @@
 package com.es.masjid.madmin.model;
 
-import java.util.Date;
+import javax.persistence.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "item")
@@ -27,7 +23,7 @@ public class Item {
 	
 	@Column(name = "type")
 	@Enumerated(EnumType.STRING)
-	private ItemType type;
+	private ItemType itemType;
 	
 	@Column(name = "category")
 	@Enumerated(EnumType.STRING)
@@ -57,6 +53,17 @@ public class Item {
 	@Column(name = "modified_by")
 	private String modifiedBy;
 
+    @OneToMany(mappedBy="item", fetch = FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
+    private Set<Document> attachments = new HashSet<Document>();
+
+    public Document getFirstAttachment(){
+        Document document = null;
+        if(attachments != null && attachments.size() > 0){
+           document = (Document)attachments.toArray()[0];
+        }
+        return document;
+    }
+
 	public Integer getId() {
 		return id;
 	}
@@ -81,15 +88,15 @@ public class Item {
 		this.validTo = validTo;
 	}
 
-	public ItemType getType() {
-		return type;
-	}
+    public ItemType getItemType() {
+        return itemType;
+    }
 
-	public void setType(ItemType type) {
-		this.type = type;
-	}
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
+    }
 
-	public Category getCategory() {
+    public Category getCategory() {
 		return category;
 	}
 
@@ -160,7 +167,12 @@ public class Item {
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
-	
-	
 
+    public Set<Document> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(Set<Document> attachments) {
+        this.attachments = attachments;
+    }
 }

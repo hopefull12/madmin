@@ -1,12 +1,9 @@
 package com.es.masjid.madmin.model;
 
-import java.util.Date;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "documents")
@@ -33,6 +30,13 @@ public class Document {
 	
 	@Column(name = "valid_to")
 	private Date validTo;
+
+    @ManyToOne
+    @JoinColumn(name="item_id")
+    private Item item;
+
+    @Transient
+    private MultipartFile file;
 	
 	public Integer getId() {
 		return id;
@@ -77,7 +81,19 @@ public class Document {
 		this.validTo = validTo;
 	}
 
-	
-	
-	
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
 }

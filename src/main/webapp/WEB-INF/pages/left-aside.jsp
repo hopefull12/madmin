@@ -16,6 +16,44 @@
 									<li class="nav-parent nav-expanded nav-active">
 										<a>
 											<i class="fa fa-copy" aria-hidden="true"></i>
+											<span>Manage Items </span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="${pageContext.request.contextPath}/item/all?itemType=PT_CSV">
+													 Daily Prayer Times CSV File
+												</a>
+											</li>	
+											<li>
+												<a href="${pageContext.request.contextPath}/item/all?itemType=PT_PDF">
+													 Prayer Times PDF File
+												</a>
+											</li>		
+											<li>
+												<a href="${pageContext.request.contextPath}/item/all?itemType=EVENT">
+													 Events
+												</a>
+											</li>																													
+											<li>
+												<a href="${pageContext.request.contextPath}/item/all?itemType=NEWS">
+													 Breaking News
+												</a>
+											</li>
+											<li>
+												<a href="${pageContext.request.contextPath}/item/all?itemType=ADS">
+													 ADS
+												</a>
+											</li>	
+											<li>
+												<a href="${pageContext.request.contextPath}/item/all?itemType=DOWNLOADDOC">
+													 Documents
+												</a>
+											</li>																																								
+										</ul>
+									</li>		
+									<li class="nav-parent nav-expanded nav-active">
+										<a>
+											<i class="fa fa-copy" aria-hidden="true"></i>
 											<span>Prayer Times </span>
 										</a>
 										<ul class="nav nav-children">
@@ -30,7 +68,7 @@
 												</a>
 											</li>																														
 										</ul>
-									</li>		
+									</li>									
 									<li class="nav-parent nav-expanded nav-active">
 										<a>
 											<i class="fa fa-copy" aria-hidden="true"></i>
@@ -43,7 +81,7 @@
 												</a>
 											</li>
 											<li>
-												<a href="${pageContext.request.contextPath}/item/news">
+												<a href="${pageContext.request.contextPath}/item/all?itemType=NEWS">
 													 Manage News Items
 												</a>
 											</li>																														
