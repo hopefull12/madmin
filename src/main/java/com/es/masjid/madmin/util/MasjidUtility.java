@@ -1,4 +1,14 @@
 package com.es.masjid.madmin.util;
+import com.es.masjid.madmin.model.DailyScheduleBean;
+import com.es.masjid.madmin.model.PrayerTimesUpload;
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -8,25 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-
-import javax.annotation.Resource;
-
-import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.es.masjid.madmin.model.DailyScheduleBean;
-import com.es.masjid.madmin.model.PrayerTimesUpload;
+import java.util.*;
 
 @Component
 public class MasjidUtility {
@@ -52,23 +44,31 @@ public class MasjidUtility {
 		
 		bean.setSunriseTime(addSpaceBeforeAMOrPM(tokens[3]));
 		
-		bean.setDhuhrTIme(addSpaceBeforeAMOrPM(tokens[4]));
-		bean.setDhuhrIqamaTIme(addSpaceBeforeAMOrPM(tokens[5]));
+		bean.setDhuhrTime(addSpaceBeforeAMOrPM(tokens[4]));
+		bean.setDhuhrIqamaTime(addSpaceBeforeAMOrPM(tokens[5]));
 		
 		bean.setAsrTime(addSpaceBeforeAMOrPM(tokens[6]));
-		bean.setAsrIqamaTIme(addSpaceBeforeAMOrPM(tokens[7]));
+		bean.setAsrIqamaTime(addSpaceBeforeAMOrPM(tokens[7]));
 		
-		bean.setMaghribTIme(addSpaceBeforeAMOrPM(tokens[8]));
-		bean.setMaghribIqamaTIme(addSpaceBeforeAMOrPM(tokens[9]));
+		bean.setMaghribTime(addSpaceBeforeAMOrPM(tokens[8]));
+		bean.setMaghribIqamaTime(addSpaceBeforeAMOrPM(tokens[9]));
 		
-		bean.setIshaTIme(addSpaceBeforeAMOrPM(tokens[10]));
-		bean.setIshaIqamaTIme(addSpaceBeforeAMOrPM(tokens[11]));		
+		bean.setIshaTime(addSpaceBeforeAMOrPM(tokens[10]));
+		bean.setIshaIqamaTime(addSpaceBeforeAMOrPM(tokens[11]));		
 		
 		bean.setJumah1Time(tokens[12]);
 		bean.setJumah1IqamaTime(tokens[13]);
 		
 		bean.setJumah2Time(tokens[14]);
 		bean.setJumah2IqamaTime(tokens[15]);
+		
+		bean.setFajarBufferTime("30");
+		bean.setDhuhrBufferTime("60");
+		bean.setAsrBufferTime("45");
+		bean.setMaghribBufferTime("30");
+		bean.setIshaBufferTime("120");
+		bean.setJumah1BufferTime("20");
+		bean.setJumah2BufferTime("60");
 		return bean;
 	}
 	
@@ -110,7 +110,44 @@ public class MasjidUtility {
 		return bean;
 		
 	}
-	
+
+    public Map<String, DailyScheduleBean> getPrayerTimes(Date fromDate, Date toDate){
+
+        DailyScheduleBean bean = null;
+        Map<String, DailyScheduleBean> result = new HashMap<>();
+        try {
+            Calendar cal = Calendar.getInstance();
+            String monthName = cal.getDisplayName(Calendar.MONDAY, Calendar.LONG, Locale.getDefault());
+            String fileName = monthName.toLowerCase() + "-" + PRAYER_TIMES_FILE_NAME;
+
+            List<DailyScheduleBean> lines = getScheduleByFileName2(fileName);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+            Date today = new Date();
+            Date todayWithZeroTime =sdf.parse(sdf.format(today));
+
+            for(DailyScheduleBean line : lines){
+
+                Date d = sdf.parse(line.getDate());
+
+                if((d.after(fromDate) && d.before(toDate)) || d.equals(fromDate) || d.equals(toDate)){
+                    result.put(line.getDate().toString(), line);
+                }
+
+                if(d.equals(todayWithZeroTime)){
+                    bean = line;
+                    break;
+                }
+            }
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
 //	public List<String> getScheduleByFileName(String fileName)
 //			{		
 //		List<String> lines = null;
@@ -158,7 +195,36 @@ public class MasjidUtility {
 		}		
 		Collections.sort(lines);
 		return beans;
-	}	
+	}
+
+    public List<DailyScheduleBean> getSchedule(String fileName)
+    {
+        List<String> lines = null;
+        List<DailyScheduleBean> beans = new ArrayList<>();
+
+        List<Map<String, String>> linesList = new LinkedList<>();
+
+        String filePath = env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/";
+        logger.debug("Reading the PRAYER TIMES FILE with name "+fileName+" from this location: "+filePath);
+        Path path = FileSystems.getDefault().getPath(filePath, fileName);
+        try {
+            lines = Files.readAllLines(path, Charset.defaultCharset() );
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Iterator<String> it = lines.iterator();
+        while(it.hasNext()){
+            String line = (String)it.next();
+
+            logger.debug("Line: "+line.length());
+            if(!line.startsWith("date") && line.length() > 100){
+                beans.add(createDailyScheduleBean(line));
+            }
+        }
+        Collections.sort(lines);
+        return beans;
+    }
 	
 	public File getFileByFileName(String fileName){
 		

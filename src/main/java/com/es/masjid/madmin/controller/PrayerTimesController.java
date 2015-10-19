@@ -1,14 +1,8 @@
 package com.es.masjid.madmin.controller;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.DateFormatSymbols;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.ServletContext;
-
+import com.es.masjid.madmin.model.DailyScheduleBean;
+import com.es.masjid.madmin.model.PrayerTimesUpload;
+import com.es.masjid.madmin.util.MasjidUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +16,21 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.es.masjid.madmin.model.DailyScheduleBean;
-import com.es.masjid.madmin.model.PrayerTimesUpload;
-import com.es.masjid.madmin.util.MasjidUtility;
+import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DateFormatSymbols;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @PropertySource("classpath:application.properties")
 @Controller
@@ -119,7 +115,15 @@ public class PrayerTimesController implements ServletContextAware{
 	public @ResponseBody DailyScheduleBean dailySchedule(){	
 		DailyScheduleBean bean = utility.getTodaysSchedule();
 		return bean;
-	}		
+	}
+
+    @RequestMapping(value={"/prayerTimes"}, method=RequestMethod.GET)
+    public @ResponseBody Map<String, DailyScheduleBean> prayerTimes(@RequestParam Date fromDate, @RequestParam Date toDate){
+        Map<String, DailyScheduleBean> map = new HashMap<>();
+        return utility.getPrayerTimes(fromDate, toDate);
+    }
+
+
 
 	
 	@RequestMapping(value={"/displayPtPDFFiles"}, method=RequestMethod.GET)
