@@ -116,10 +116,15 @@ public class PrayerTimesController implements ServletContextAware{
 		DailyScheduleBean bean = utility.getTodaysSchedule();
 		return bean;
 	}
+	
+	@RequestMapping(value={"/dailySchedule2"}, method=RequestMethod.GET)
+	public @ResponseBody DailyScheduleBean dailySchedule2(){	
+		DailyScheduleBean bean = utility.getTodaySchedule2();
+		return bean;
+	}	
 
     @RequestMapping(value={"/prayerTimes"}, method=RequestMethod.GET)
-    public @ResponseBody Map<String, DailyScheduleBean> prayerTimes(@RequestParam Date fromDate, @RequestParam Date toDate){
-        Map<String, DailyScheduleBean> map = new HashMap<>();
+    public @ResponseBody List<DailyScheduleBean> prayerTimes(@RequestParam Date fromDate, @RequestParam Date toDate){
         return utility.getPrayerTimes(fromDate, toDate);
     }
 

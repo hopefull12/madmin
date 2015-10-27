@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DailyScheduleBean {
 	
-	private String fajarBeginTime;
+	private String fajarTime;
 	private String fajarIqamaTime;
 	private String fajarBufferTime;
 	private String sunriseTime;
@@ -33,11 +33,12 @@ public class DailyScheduleBean {
 	private String jumah2IqamaTime;
 	private String jumah2BufferTime;
 	
-	public String getFajarBeginTime() {
-		return fajarBeginTime;
+
+	public String getFajarTime() {
+		return fajarTime;
 	}
-	public void setFajarBeginTime(String fajarBeginTime) {
-		this.fajarBeginTime = fajarBeginTime;
+	public void setFajarTime(String fajarTime) {
+		this.fajarTime = fajarTime;
 	}
 	public String getFajarIqamaTime() {
 		return fajarIqamaTime;

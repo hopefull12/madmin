@@ -68,7 +68,8 @@
 												</a>
 											</li>																														
 										</ul>
-									</li>									
+									</li>		
+									<!-- 							
 									<li class="nav-parent nav-expanded nav-active">
 										<a>
 											<i class="fa fa-copy" aria-hidden="true"></i>
@@ -125,6 +126,7 @@
 										
 										</ul>
 									</li>
+									 -->
 	
 					
 								</ul>

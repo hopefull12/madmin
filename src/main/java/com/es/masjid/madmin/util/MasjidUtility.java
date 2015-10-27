@@ -1,6 +1,7 @@
 package com.es.masjid.madmin.util;
 import com.es.masjid.madmin.model.DailyScheduleBean;
 import com.es.masjid.madmin.model.PrayerTimesUpload;
+
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -39,7 +41,7 @@ public class MasjidUtility {
 		
 		bean.setDate(tokens[0]);
 		
-		bean.setFajarBeginTime(addSpaceBeforeAMOrPM(tokens[1]));
+		bean.setFajarTime(addSpaceBeforeAMOrPM(tokens[1]));
 		bean.setFajarIqamaTime(addSpaceBeforeAMOrPM(tokens[2]));
 		
 		bean.setSunriseTime(addSpaceBeforeAMOrPM(tokens[3]));
@@ -63,7 +65,7 @@ public class MasjidUtility {
 		bean.setJumah2IqamaTime(tokens[15]);
 		
 		bean.setFajarBufferTime("30");
-		bean.setDhuhrBufferTime("60");
+		bean.setDhuhrBufferTime("1");
 		bean.setAsrBufferTime("45");
 		bean.setMaghribBufferTime("30");
 		bean.setIshaBufferTime("120");
@@ -110,11 +112,80 @@ public class MasjidUtility {
 		return bean;
 		
 	}
+	
+    public DailyScheduleBean getTodaySchedule2(){
+        DailyScheduleBean bean = null;
+        try {
+        
+        //get current client date with time
+        Date clientDate = getCurrentClientDateWithTime();
 
-    public Map<String, DailyScheduleBean> getPrayerTimes(Date fromDate, Date toDate){
+        //get today isha time
+        DailyScheduleBean todayBean = getPrayerTimes(new Date(clientDate.getTime()));
+        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy h:mm  a");
+        Date ishaDate = sdf.parse(todayBean.getDate()+" "+todayBean.getIshaIqamaTime());
+        Date ishaDateWithBufferTime = new Date(ishaDate.getTime() + (new Integer(todayBean.getIshaBufferTime())*60*1000));
+        
+        //if isha not over then return today data or else return tomorrow data
+        if(clientDate.before(ishaDateWithBufferTime)){
+        	bean = todayBean;
+        } else {
+        	
+        	Date d = new Date();
+        	Calendar c = Calendar.getInstance(); 
+        	c.setTime(d); 
+        	c.add(Calendar.DATE, 1);
+        	d = c.getTime();        	
+        	bean = getPrayerTimes(d);
+        }
+
+        } catch (ParseException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return bean;
+    }
+    
+
+	
+    public DailyScheduleBean getPrayerTimes(Date targetDate){
 
         DailyScheduleBean bean = null;
-        Map<String, DailyScheduleBean> result = new HashMap<>();
+        
+        try {
+        	//Basing on target date get name of the month
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(targetDate);
+            String monthName = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+            String fileName = monthName.toLowerCase() + "-" + PRAYER_TIMES_FILE_NAME;
+
+            //Get file contents
+            List<DailyScheduleBean> lines = getScheduleByFileName2(fileName);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+            Date targetDateWithoutTime =sdf.parse(sdf.format(targetDate));
+
+            for(DailyScheduleBean line : lines){
+                Date d = sdf.parse(line.getDate());
+                if(d.equals(targetDateWithoutTime)){
+                    bean = line;
+                    break;
+                }
+            }
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return bean;
+
+    }	
+
+    public List<DailyScheduleBean> getPrayerTimes(Date fromDate, Date toDate){
+
+        DailyScheduleBean bean = null;
+        List<DailyScheduleBean> result = new ArrayList<>();
         try {
             Calendar cal = Calendar.getInstance();
             String monthName = cal.getDisplayName(Calendar.MONDAY, Calendar.LONG, Locale.getDefault());
@@ -131,13 +202,13 @@ public class MasjidUtility {
                 Date d = sdf.parse(line.getDate());
 
                 if((d.after(fromDate) && d.before(toDate)) || d.equals(fromDate) || d.equals(toDate)){
-                    result.put(line.getDate().toString(), line);
+                    result.add(line);
                 }
 
-                if(d.equals(todayWithZeroTime)){
-                    bean = line;
-                    break;
-                }
+//                if(d.equals(todayWithZeroTime)){
+//                    bean = line;
+//                    break;
+//                }
             }
 
         } catch (ParseException e) {
@@ -197,34 +268,34 @@ public class MasjidUtility {
 		return beans;
 	}
 
-    public List<DailyScheduleBean> getSchedule(String fileName)
-    {
-        List<String> lines = null;
-        List<DailyScheduleBean> beans = new ArrayList<>();
-
-        List<Map<String, String>> linesList = new LinkedList<>();
-
-        String filePath = env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/";
-        logger.debug("Reading the PRAYER TIMES FILE with name "+fileName+" from this location: "+filePath);
-        Path path = FileSystems.getDefault().getPath(filePath, fileName);
-        try {
-            lines = Files.readAllLines(path, Charset.defaultCharset() );
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        Iterator<String> it = lines.iterator();
-        while(it.hasNext()){
-            String line = (String)it.next();
-
-            logger.debug("Line: "+line.length());
-            if(!line.startsWith("date") && line.length() > 100){
-                beans.add(createDailyScheduleBean(line));
-            }
-        }
-        Collections.sort(lines);
-        return beans;
-    }
+//    public List<DailyScheduleBean> getSchedule(String fileName)
+//    {
+//        List<String> lines = null;
+//        List<DailyScheduleBean> beans = new ArrayList<>();
+//
+//        List<Map<String, String>> linesList = new LinkedList<>();
+//
+//        String filePath = env.getRequiredProperty(DATA_PATH) + ClientContext.getClientId() + "/";
+//        logger.debug("Reading the PRAYER TIMES FILE with name "+fileName+" from this location: "+filePath);
+//        Path path = FileSystems.getDefault().getPath(filePath, fileName);
+//        try {
+//            lines = Files.readAllLines(path, Charset.defaultCharset() );
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        Iterator<String> it = lines.iterator();
+//        while(it.hasNext()){
+//            String line = (String)it.next();
+//
+//            logger.debug("Line: "+line.length());
+//            if(!line.startsWith("date") && line.length() > 100){
+//                beans.add(createDailyScheduleBean(line));
+//            }
+//        }
+//        Collections.sort(lines);
+//        return beans;
+//    }
 	
 	public File getFileByFileName(String fileName){
 		
@@ -331,6 +402,35 @@ public class MasjidUtility {
 			throw e;
 		}
 	}		
+	
+    private Date getCurrentClientDateWithTime(){
+    	
+    	Date nowClient = null;    	
+		try {
+			Date now = new Date();
+			System.out.println("Now in default time zone: "+now);
+			
+			//First create a string representation of date using client timezone
+			SimpleDateFormat sdfChicago = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a");
+			TimeZone tzInAmerica = TimeZone.getTimeZone("America/Chicago");
+			sdfChicago.setTimeZone(tzInAmerica);
+			String nowClientStr = sdfChicago.format(now);
+			//System.out.println(nowClientStr);
+			
+			SimpleDateFormat sdfDefault = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a");
+			
+			nowClient = sdfDefault.parse(nowClientStr);
+			//System.out.println(nowClient);
+			
+			//Date isha = sdfDefault.parse("25-10-2015 11:29:04 PM");
+			//System.out.println("Isha overe?: "+isha.before(nowClient));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    	
+		
+		return nowClient;
+    }	
 	
 	public static void main(String[] args) {
 		
