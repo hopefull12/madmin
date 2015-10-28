@@ -117,10 +117,9 @@ public class PrayerTimesController implements ServletContextAware{
 		return bean;
 	}
 	
-	@RequestMapping(value={"/dailySchedule2"}, method=RequestMethod.GET)
-	public @ResponseBody DailyScheduleBean dailySchedule2(){	
-		DailyScheduleBean bean = utility.getTodaySchedule2();
-		return bean;
+	@RequestMapping(value={"/prayerTimes/{type}"}, method=RequestMethod.GET)
+	public @ResponseBody List<DailyScheduleBean> dailySchedule2(@PathVariable("type") String type){	
+		return utility.getPrayerTimes(type);
 	}	
 
     @RequestMapping(value={"/prayerTimes"}, method=RequestMethod.GET)
