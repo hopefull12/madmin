@@ -19,8 +19,9 @@ public class ItemCreator {
     protected ItemBean itemBean = null;
 
     public Item create(ItemBean itemBean){
-
+        
         initialize(itemBean);
+        preProcessing();
         validate();
         setBaseProperties();
         setAttachments();
@@ -33,6 +34,8 @@ public class ItemCreator {
         this.itemBean = itemBean;
     }
 
+    protected void preProcessing(){}
+
     protected void validate(){
 
     }
@@ -43,7 +46,6 @@ public class ItemCreator {
         this.item.setValidFrom(this.itemBean.getValidFrom());
         this.item.setValidTo(this.itemBean.getValidTo());
         this.item.setShortDescription(this.itemBean.getShortDescription());
-        this.item.setDisplayName(this.itemBean.getDisplayName());
     }
 
     protected void setCustomProperties(){

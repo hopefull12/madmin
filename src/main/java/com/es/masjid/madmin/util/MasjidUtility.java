@@ -62,6 +62,7 @@ public class MasjidUtility {
         List<DailyScheduleBean> result = new ArrayList<>();
         try {
             Calendar cal = Calendar.getInstance();
+            cal.setTime(fromDate);
             String monthName = cal.getDisplayName(Calendar.MONDAY, Calendar.LONG, Locale.getDefault());
             String fileName = monthName.toLowerCase() + "-" + PRAYER_TIMES_FILE_NAME;
 
@@ -78,11 +79,6 @@ public class MasjidUtility {
                 if((d.after(fromDate) && d.before(toDate)) || d.equals(fromDate) || d.equals(toDate)){
                     result.add(line);
                 }
-
-//                if(d.equals(todayWithZeroTime)){
-//                    bean = line;
-//                    break;
-//                }
             }
 
         } catch (ParseException e) {

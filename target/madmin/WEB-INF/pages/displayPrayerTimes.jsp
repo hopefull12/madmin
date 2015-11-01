@@ -35,17 +35,17 @@
 										<c:forEach var="dailyprayertime" items="${prayertimes}">										
 											<tr>
 											<td>${dailyprayertime.date}</td>
-											<td>${dailyprayertime.fajarBeginTime}</td>
+											<td>${dailyprayertime.fajarTime}</td>
 											<td>${dailyprayertime.fajarIqamaTime}</td>
 											<td>${dailyprayertime.sunriseTime}</td>
-											<td>${dailyprayertime.dhuhrTIme}</td>
-											<td>${dailyprayertime.dhuhrIqamaTIme}</td>
+											<td>${dailyprayertime.dhuhrTime}</td>
+											<td>${dailyprayertime.dhuhrIqamaTime}</td>
 											<td>${dailyprayertime.asrTime}</td>
-											<td>${dailyprayertime.asrIqamaTIme}</td>
-											<td>${dailyprayertime.maghribTIme}</td>
-											<td>${dailyprayertime.maghribIqamaTIme}</td>
-											<td>${dailyprayertime.ishaTIme}</td>
-											<td>${dailyprayertime.ishaIqamaTIme}</td>
+											<td>${dailyprayertime.asrIqamaTime}</td>
+											<td>${dailyprayertime.maghribTime}</td>
+											<td>${dailyprayertime.maghribIqamaTime}</td>
+											<td>${dailyprayertime.ishaTime}</td>
+											<td>${dailyprayertime.ishaIqamaTime}</td>
 											</tr>																						
 										</c:forEach>
 									</tbody>

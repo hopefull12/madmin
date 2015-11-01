@@ -2,8 +2,10 @@ package com.es.masjid.madmin.controller.web;
 
 import com.es.masjid.madmin.model.DisplayItemBean;
 import com.es.masjid.madmin.model.Item;
+import com.es.masjid.madmin.model.ItemBean;
 import com.es.masjid.madmin.model.ItemType;
 import com.es.masjid.madmin.service.GenericItemService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -40,9 +42,9 @@ public class DefaultItemModelCreator implements ItemModelCreator {
         List<Item> items = genericItemService.getCurrentAndFutureValidItemsByType(itemType);
         mav.addObject("items", mapItemToDTO(items));
 
-        Item item = new Item();
-        item.setItemType(itemType);
-        mav.addObject("item", item);
+        ItemBean itemBean = new ItemBean();
+        itemBean.setItemType(itemType);
+        mav.addObject("itemBean", itemBean);
     }
 
     protected void addCustomObjects(){

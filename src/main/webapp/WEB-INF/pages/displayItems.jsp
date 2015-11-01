@@ -9,7 +9,7 @@
     </header>
 
     <c:choose>
-        <c:when test="${item.itemType == 'PT_CSV'}" >
+        <c:when test="${itemBean.itemType == 'PT_CSV'}" >
             <!-- Display all document items start -->
             <div class="row">
                 <div class="col-md-2">
@@ -40,7 +40,7 @@
 	
 	                                <tr>
 	
-	                                    <td>${itemVar.attachment1Name}</td>
+	                                    <td><a href="displayPTCSVFiles/${itemVar.name}/">${itemVar.attachment1Name}</a></td>
 	                                    <td><fmt:formatDate value="${itemVar.validFrom}" pattern="MMM-dd-yyyy"/></td>
 	                                    <td><fmt:formatDate value="${itemVar.validTo}" pattern="MMM-dd-yyyy"/></td>
 	                                    <td><fmt:formatDate value="${itemVar.dateCreated}" pattern="MMM-dd-yyyy"/></td>
@@ -75,7 +75,7 @@
 				<div class="col-md-2"></div>
                 <div class="col-md-8">
 
-                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="item"  enctype="multipart/form-data">
+                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="itemBean"  enctype="multipart/form-data">
                         <section class="panel">
                             <header class="panel-heading">
                                 <div class="panel-actions">
@@ -93,21 +93,12 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Document Display Dates</label>
-                                    <div class="col-sm-8">
-                                        <div class="input-daterange input-group" data-plugin-datepicker>
-                                                        <span class="input-group-addon">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span>
-                                            <form:input path="validFrom" cssClass="form-control"/>
-
-                                            <span class="input-group-addon">to</span>
-                                            <form:input path="validTo" cssClass="form-control"/>
-
-                                        </div>
-                                    </div>
-                                </div>
+								<div class="form-group">
+										<label class="col-sm-4 control-label" for="inputSuccess">Select Month</label>
+										<div class="col-sm-8">												
+											<form:select path="month" items="${months}"/>
+										</div>
+								</div>	
 
 
                                 <div class="form-group">

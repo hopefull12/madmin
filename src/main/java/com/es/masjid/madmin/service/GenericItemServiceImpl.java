@@ -7,8 +7,6 @@ import com.es.masjid.madmin.model.ItemType;
 import com.es.masjid.madmin.repository.DocumentRepository;
 import com.es.masjid.madmin.repository.GenericItemRepository;
 import com.es.masjid.madmin.util.ClientContext;
-import com.es.masjid.madmin.util.ItemUtil;
-
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -37,9 +34,6 @@ public class GenericItemServiceImpl implements GenericItemService {
     private final String PRAYER_TIMES_FILE_NAME = "prayertimes.csv";
 
     Logger logger = LoggerFactory.getLogger(GenericItemServiceImpl.class);
-
-    @Autowired
-    private ItemCreator itemCreator;
     
     @Autowired
     private GenericItemRepository genericItemRepository;
@@ -51,7 +45,7 @@ public class GenericItemServiceImpl implements GenericItemService {
     public void createItem(ItemBean itemBean) throws IOException {
 
         //create item and save
-        Item item = itemCreator.create(itemBean);        
+        Item item = (ItemCreatorFactory.getItemCreator(itemBean.getItemType())).create(itemBean);
         setAudit(item);
         
         genericItemRepository.save(item);
@@ -61,7 +55,6 @@ public class GenericItemServiceImpl implements GenericItemService {
             saveAttachment(document);
         }
     }
-
     
     private void setAudit(Item item){
     	item.setDateCreated(new Date());
@@ -82,25 +75,11 @@ public class GenericItemServiceImpl implements GenericItemService {
 
     @Transactional
     public void deleteItem(Integer id) {
-
-    	Item item = genericItemRepository.findOne(id);
-    	if(item.getAttachments() != null){
-    		for(Document document : item.getAttachments()){
-    			deleteFile(document.getName());
-    		}
-    	}
         genericItemRepository.delete(id);
     }
 
     public Item findOne(Integer id){
         return genericItemRepository.findOne(id);
-    }
-    
-    public void deleteFile(String fileName){
-    	File f = getAttachment(fileName);
-    	if(f != null && f.exists()){
-    		f.delete();
-    	}
     }
 
     public void saveAttachment(Document document) throws IOException {
