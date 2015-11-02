@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class PrayerTimesCSVItemCreator extends ItemCreator {
 
-    private final String PRAYER_TIMES_FILE_NAME = "prayertimes.csv";
+    private final String PRAYER_TIMES_FILE_NAME = "prayertimes";
 
     public void preProcessing(){
         Date temp = null;

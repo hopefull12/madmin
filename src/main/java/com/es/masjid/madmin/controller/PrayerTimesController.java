@@ -103,7 +103,7 @@ public class PrayerTimesController implements ServletContextAware{
 				
 		ModelAndView mv = new ModelAndView("displayPrayerTimesTile");
 		
-		List<DailyScheduleBean> lines = utility.getScheduleByFileName2(fileName+".csv");
+		List<DailyScheduleBean> lines = utility.getScheduleByFileName2(fileName);
 		mv.addObject("prayertimes",lines);
 		
 		return mv;

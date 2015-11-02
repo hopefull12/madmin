@@ -34,10 +34,13 @@ public class DisplayItemBean {
     private String modifiedBy;
 
     private String attachment1Name;
+    private String attachment1FileName;
 
     private String attachment2Name;
+    private String attachment2FileName;
 
     private String attachment3Name;
+    private String attachment3FileName;
 
     public DisplayItemBean(Item item){
         this.id = item.getId();
@@ -56,6 +59,7 @@ public class DisplayItemBean {
         Object[] attachments = (item.getAttachments() != null) ? item.getAttachments().toArray() : null ;
         if(attachments != null && attachments.length > 0){
             this.attachment1Name = ((Document)attachments[0]).getDisplayName();
+            this.attachment1FileName = ((Document)attachments[0]).getName();
         }
 
     }
@@ -187,4 +191,29 @@ public class DisplayItemBean {
     public void setAttachment3Name(String attachment3Name) {
         this.attachment3Name = attachment3Name;
     }
+
+	public String getAttachment1FileName() {
+		return attachment1FileName;
+	}
+
+	public void setAttachment1FileName(String attachment1FileName) {
+		this.attachment1FileName = attachment1FileName;
+	}
+
+	public String getAttachment2FileName() {
+		return attachment2FileName;
+	}
+
+	public void setAttachment2FileName(String attachment2FileName) {
+		this.attachment2FileName = attachment2FileName;
+	}
+
+	public String getAttachment3FileName() {
+		return attachment3FileName;
+	}
+
+	public void setAttachment3FileName(String attachment3FileName) {
+		this.attachment3FileName = attachment3FileName;
+	}
+    
 }

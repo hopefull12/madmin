@@ -40,7 +40,7 @@
 	
 	                                <tr>
 	
-	                                    <td><a href="displayPTCSVFiles/${itemVar.name}/">${itemVar.attachment1Name}</a></td>
+	                                    <td><a href="${pageContext.request.contextPath}/displayPTCSVFiles/${itemVar.attachment1FileName}/">${itemVar.attachment1Name}</a></td>
 	                                    <td><fmt:formatDate value="${itemVar.validFrom}" pattern="MMM-dd-yyyy"/></td>
 	                                    <td><fmt:formatDate value="${itemVar.validTo}" pattern="MMM-dd-yyyy"/></td>
 	                                    <td><fmt:formatDate value="${itemVar.dateCreated}" pattern="MMM-dd-yyyy"/></td>
