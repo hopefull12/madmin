@@ -6,6 +6,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
+
+import com.es.masjid.madmin.model.EmailBean;
+import com.es.masjid.madmin.util.ClientContext;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -20,36 +24,40 @@ import java.util.Properties;
 /**
  * Created by myachb on 10/27/2015.
  */
-public class EmailServiceImpl {
+@Component
+public class EmailServiceImpl implements EmailService {
 
 	Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
     private JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
     
-    public void sendEmail(String from1, String body){
-        String host = "mail.yahibaba.com";
+    /* (non-Javadoc)
+	 * @see com.es.masjid.madmin.service.EmailService#sendEmail(com.es.masjid.madmin.model.EmailBean)
+	 */
+    @Override
+	public void sendEmail(EmailBean emailBean){
         String from = "support@yahibaba.com";
-        String password = "Krishna1";
         Properties props = System.getProperties();
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", from);
-        props.put("mail.smtp.password", password);
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.host", ClientContext.emailHost);
+        props.put("mail.smtp.user", ClientContext.emailUserName);
+        props.put("mail.smtp.password", ClientContext.emailPassword);
+        props.put("mail.smtp.port", ClientContext.emailPort);
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         try{
             Session session = Session.getDefaultInstance(props, null);
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
-            message.addRecipients(Message.RecipientType.TO, "info@masjidalhuda.org");
-            message.setSubject("This is a Test");
-            message.setText("Email sent by the system.");
+            message.addRecipients(Message.RecipientType.TO, ClientContext.emailTo);
+            message.setSubject(emailBean.getSubject());
+            message.setText(emailBean.getBody());
             Transport transport = session.getTransport("smtp");
-            transport.connect(host, from, password);//CAUSES EXCEPTION
+            transport.connect(ClientContext.emailHost, "support@yahibaba.com", "Krishna1");//CAUSES EXCEPTION
             transport.sendMessage(message, message.getAllRecipients());
-            System.out.println("Email sent successfully");
         }catch(MessagingException e){
+        	logger.error(e.getMessage());
             e.printStackTrace();
-        }    	
+        }
+        logger.info("Email sent successfully from: "+from);
     }
     
 //
@@ -127,7 +135,7 @@ public class EmailServiceImpl {
 //    }
 
     public static void main(String args[]){
-        EmailServiceImpl emailService = new EmailServiceImpl();
+        EmailService emailService = new EmailServiceImpl();
         //emailService.sendEmail();
         
     }
