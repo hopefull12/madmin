@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
 	 * @see com.es.masjid.madmin.service.EmailService#sendEmail(com.es.masjid.madmin.model.EmailBean)
 	 */
     @Override
-	public void sendEmail(EmailBean emailBean){
+	public String sendEmail(EmailBean emailBean){
         String from = "support@yahibaba.com";
         Properties props = System.getProperties();
         props.put("mail.smtp.host", ClientContext.emailHost);
@@ -56,8 +56,10 @@ public class EmailServiceImpl implements EmailService {
         }catch(MessagingException e){
         	logger.error(e.getMessage());
             e.printStackTrace();
+            return "failure";
         }
         logger.info("Email sent successfully from: "+from);
+        return "success";
     }
     
 //

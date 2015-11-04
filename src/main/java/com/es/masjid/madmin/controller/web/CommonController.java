@@ -38,13 +38,13 @@ public class CommonController {
      */
     @RequestMapping(value={"/sendEmail"}, method= RequestMethod.GET)
     public @ResponseBody
-    String sendEmail(@RequestParam(value="from", required=false) String from,
+    String sendEmail(@RequestParam(value="fromEmail", required=false) String fromEmail,
                      @RequestParam(value="name", required=false) String name,
                      @RequestParam(value="phone", required=false) String phone,
                      @RequestParam(value="subject", required=false) String subject,
                      @RequestParam(value="body", required=false) String body) {
 
-        EmailBean emailBean = new EmailBean(from, name, subject, body, phone);
+        EmailBean emailBean = new EmailBean(fromEmail, name, subject, body, phone);
         emailService.sendEmail(emailBean);
         return "";
     }
@@ -56,13 +56,13 @@ public class CommonController {
      */
     @RequestMapping(value = "/create_customer", method = RequestMethod.POST, headers = "Content-Type=application/x-www-form-urlencoded")
     public @ResponseBody
-    String sendEmail2(@RequestParam(value="from", required=false) String from,
+    String sendEmail2(@RequestParam(value="fromEmail", required=false) String fromEmail,
                       @RequestParam(value="name", required=false) String name,
                       @RequestParam(value="body", required=false) String phone,
                       @RequestParam(value="subject", required=false) String subject,
                       @RequestParam(value="body", required=false) String body) {
 
-        EmailBean emailBean = new EmailBean(from, name, subject, body, phone);
+        EmailBean emailBean = new EmailBean(fromEmail, name, subject, body, phone);
         emailService.sendEmail(emailBean);
         return "";
     }

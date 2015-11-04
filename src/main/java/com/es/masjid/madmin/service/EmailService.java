@@ -4,6 +4,6 @@ import com.es.masjid.madmin.model.EmailBean;
 
 public interface EmailService {
 
-	public abstract void sendEmail(EmailBean emailBean);
+	public String sendEmail(EmailBean emailBean);
 
 }
