@@ -71,6 +71,23 @@ public class GenericItemControllerUtil {
         return mav;
     }
 
-
+//    public ModelAndView getPageableItems(ItemType itemType, boolean ajaxReq, Pageable pageable){
+//
+//        Page<Item> items = genericItemService.findAllItems(itemType, pageable);
+//
+//        ModelAndView mav = new ModelAndView();
+//        if(ajaxReq){
+//            mav.setViewName("itemsTileAjax");
+//        }else{
+//            mav.setViewName("itemsTile");
+//        }
+//        mav.addObject("items", items.getContent());
+//        mav.addObject("mediaTypes", Arrays.asList(ItemType.MEDIA_AUDIO, ItemType.MEDIA_IMAGE, ItemType.MEDIA_VIDEO));
+//        float nrOfPages = items.getTotalPages();
+//        mav.addObject("maxPages", nrOfPages);
+//        mav.addObject("nextPage", pageable.getPageNumber()+1);
+//
+//        return mav;
+//    }
 
 }

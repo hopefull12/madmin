@@ -1,6 +1,7 @@
 package com.es.masjid.madmin.controller.web;
 
 import com.es.masjid.madmin.model.ItemType;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
@@ -10,5 +11,6 @@ import java.util.Map;
  */
 public interface ClientResponseCreator {
     List<Map<String, String>> createAllItemsResponse(ItemType itemType);
+    List<Map<String, String>> createAllItemsResponse(ItemType itemType, Pageable pageRequest);
     Map<String, String> createOneItemResponse(Integer id);
 }

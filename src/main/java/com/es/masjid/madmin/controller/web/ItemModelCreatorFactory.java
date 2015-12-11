@@ -11,6 +11,8 @@ public class ItemModelCreatorFactory {
     public static ItemModelCreator getItemModelCreator(ItemType itemType, GenericItemService genericItemService){
         if(ItemType.PT_CSV.toString().equalsIgnoreCase(itemType.toString())){
             return new PrayerTimeCSVItemModelCreator(itemType, genericItemService);
+        }if(ItemType.MEDIA.toString().equalsIgnoreCase(itemType.toString())){
+            return new MediaItemModelCreator(itemType, genericItemService);
         }else{
             return new DefaultItemModelCreator(itemType, genericItemService);
         }

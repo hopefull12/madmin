@@ -1,5 +1,7 @@
 package com.es.masjid.madmin.controller.web;
 
+import com.es.masjid.madmin.model.ItemBean;
+import com.es.masjid.madmin.model.ItemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.es.masjid.madmin.model.ItemBean;
-import com.es.masjid.madmin.model.ItemType;
 
 /**
  * Created by myachb on 10/6/2015.
@@ -45,6 +44,10 @@ public class GenericItemController {
   @RequestMapping(value={"/delete"}, method=RequestMethod.GET)
   public ModelAndView deleteNewsItem(@RequestParam Integer id, @RequestParam ItemType itemType, final RedirectAttributes redirectAttributes) {
       return genericItemControllerUtil.deleteItem(id, itemType, redirectAttributes, "/item/all?itemType="+itemType);
-  }    
+  }
+//
+//    public ModelAndView getPageableItems(@RequestParam ItemType itemType, @RequestParam boolean ajaxReq, Pageable pageable){
+//        return genericItemControllerUtil.getPageableItems(itemType, ajaxReq, pageable);
+//    }
 
 }

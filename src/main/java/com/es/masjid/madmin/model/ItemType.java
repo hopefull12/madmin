@@ -6,6 +6,10 @@ public enum ItemType {
 	EVENT,
     ADS,
 	DOWNLOADDOC,
+    MEDIA,
+    MEDIA_AUDIO,
+    MEDIA_VIDEO,
+    MEDIA_IMAGE,
     PT_PDF,
     PT_CSV;
 

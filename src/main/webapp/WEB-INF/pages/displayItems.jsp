@@ -9,7 +9,136 @@
     </header>
 
     <c:choose>
-        <c:when test="${itemBean.itemType == 'PT_CSV'}" >
+
+    <c:when test="${itemBean.itemType == 'MEDIA'}" >
+        <!-- Display all document items start -->
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                            <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
+                        </div>
+                        <h2 class="panel-title text-center">Prayer Time CSV Files</h2>
+                    </header>
+                    <div class="panel-body">
+                        <table class="display table table-bordered table-striped" id="datatable-media">
+                            <thead>
+                            <tr>
+                                <th width="60%" class="text-center">Media Name</th>
+                                <th width="10%" class="text-center">Valid From</th>
+                                <th width="10%" class="text-center">Valid To</th>
+                                <th width="10%" class="text-center">Date Created</th>
+                                <th width="10%" class="text-center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <c:forEach var="itemVar" items="${items}">
+
+                                <tr>
+
+                                    <td><a href="${pageContext.request.contextPath}/displayPTCSVFiles/${itemVar.displayName}/">${itemVar.attachment1Name}</a></td>
+                                    <td><fmt:formatDate value="${itemVar.validFrom}" pattern="MMM-dd-yyyy"/></td>
+                                    <td><fmt:formatDate value="${itemVar.validTo}" pattern="MMM-dd-yyyy"/></td>
+                                    <td><fmt:formatDate value="${itemVar.dateCreated}" pattern="MMM-dd-yyyy"/></td>
+                                    <td><a href="${pageContext.request.contextPath}/item/delete?id=${itemVar.id}&itemType=${itemVar.itemType}">Delete</a></td>
+
+                                </tr>
+
+                            </c:forEach>
+
+                            </tbody>
+                        </table>
+
+                        <script type="text/javascript">
+
+                            $(document).ready(function() {
+                                $('#datatable-media').DataTable();
+                            } );
+
+                        </script>
+
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+        <!-- Display all document items end -->
+
+        <!-- Display form for creating document item -->
+        <div class="row">
+
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+
+                <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="itemBean"  enctype="multipart/form-data">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <div class="panel-actions">
+                                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                                <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
+                            </div>
+                            <h2 class="panel-title text-center">Create Media</h2>
+                        </header>
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="inputSuccess">Title</label>
+                                <div class="col-sm-8">
+                                    <form:input path="displayName" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="inputSuccess">Media Type</label>
+                                <div class="col-sm-8">
+                                    <form:select path="itemType" items="${mediaTypes}"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="inputSuccess">Media Link</label>
+                                <div class="col-sm-8">
+                                    <form:input path="name" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Media Display Dates</label>
+                                <div class="col-sm-8">
+                                    <div class="input-daterange input-group" data-plugin-datepicker>
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                        <form:input path="validFrom" cssClass="form-control"/>
+
+                                        <span class="input-group-addon">to</span>
+                                        <form:input path="validTo" cssClass="form-control"/>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <footer class="panel-footer text-center">
+                            <button class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-default">Reset</button>
+                        </footer>
+                    </section>
+                </form:form>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <!-- Display form for creating document item End -->
+
+    </c:when>
+
+    <c:when test="${itemBean.itemType == 'PT_CSV'}" >
             <!-- Display all document items start -->
             <div class="row">
                 <div class="col-md-2">

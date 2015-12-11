@@ -13,6 +13,9 @@ public class ClientItemResponseCreatorFactory {
             return new NewsItemResponseCreator(genericItemService);
         } else if(ItemType.PT_CSV.toString().equalsIgnoreCase(itemType.toString())) {
             return new NewsItemResponseCreator(genericItemService);
+        }else if(ItemType.MEDIA_AUDIO.toString().equalsIgnoreCase(itemType.toString()) ||
+                ItemType.MEDIA_VIDEO.toString().equalsIgnoreCase(itemType.toString())) {
+            return new MediaItemResponseCreator(genericItemService);
         } else{
             return new ItemWithAttachmentResponseCreator(genericItemService);
         }

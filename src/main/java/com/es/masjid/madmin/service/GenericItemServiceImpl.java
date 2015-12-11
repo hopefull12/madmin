@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +65,6 @@ public class GenericItemServiceImpl implements GenericItemService {
     	item.setModifiedBy("DEFAULT");
     }
 
-    @Override
     public List<Item> getCurrentAndFutureValidItemsByType(ItemType type) {
         return genericItemRepository.getCurrentAndFutureValidItemsByType(type);
     }
@@ -71,6 +72,15 @@ public class GenericItemServiceImpl implements GenericItemService {
     @Override
     public List<Item> getCurrentValidItemsByType(ItemType type) {
         return genericItemRepository.getCurrentValidItemsByType(type);
+    }
+
+    @Override
+    public List<Item> getCurrentValidItemsByType(ItemType type, Pageable pageRequest) {
+        return genericItemRepository.getCurrentValidItemsByType(type);
+    }
+
+    public Page<Item> findAllItems(ItemType itemType, Pageable pageRequest){
+        return genericItemRepository.findAllItems(new Date(), itemType, pageRequest);
     }
 
     @Transactional
