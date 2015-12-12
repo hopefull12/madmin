@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6fdc0207-045f-4502-a86d-8970cf0608f2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/AbstractClientResponseCreator.java" afterPath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/AbstractClientResponseCreator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/ClientItemController.java" afterPath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/ClientItemController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/ClientItemResponseCreatorFactory.java" afterPath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/ClientItemResponseCreatorFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/ClientResponseCreator.java" afterPath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/ClientResponseCreator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/GenericItemController.java" afterPath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/GenericItemController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/GenericItemControllerUtil.java" afterPath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/GenericItemControllerUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/repository/GenericItemRepository.java" afterPath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/repository/GenericItemRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/service/GenericItemService.java" afterPath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/service/GenericItemService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/service/GenericItemServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/service/GenericItemServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/ItemModelCreatorFactory.java" afterPath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/controller/web/ItemModelCreatorFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/model/ItemType.java" afterPath="$PROJECT_DIR$/src/main/java/com/es/masjid/madmin/model/ItemType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/displayItems.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/displayItems.jsp" />
-    </list>
+    <list default="true" id="6fdc0207-045f-4502-a86d-8970cf0608f2" name="Default" comment="" />
     <ignored path="madmin.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
