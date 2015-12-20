@@ -20,7 +20,7 @@ public interface GenericItemService {
 
     List<Item> getCurrentValidItemsByType(ItemType type);
 
-    List<Item> getCurrentValidItemsByType(ItemType type, Pageable pageRequest);
+    Page<Item> getCurrentValidItemsByType(ItemType type, Pageable pageRequest);
 
     Page<Item> findAllItems(ItemType itemType, Pageable pageRequest);
 

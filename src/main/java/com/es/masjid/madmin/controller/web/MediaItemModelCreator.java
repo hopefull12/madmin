@@ -14,6 +14,6 @@ public class MediaItemModelCreator extends DefaultItemModelCreator {
 
     protected void addCustomObjects(){
         String[] mediaTypes = {ItemType.MEDIA_AUDIO.toString(), ItemType.MEDIA_VIDEO.toString(), ItemType.MEDIA_IMAGE.toString()};
-        this.mav.addObject("months", mediaTypes);
+        this.mav.addObject("mediaTypes", mediaTypes);
     }
 }

@@ -75,12 +75,12 @@ public class GenericItemServiceImpl implements GenericItemService {
     }
 
     @Override
-    public List<Item> getCurrentValidItemsByType(ItemType type, Pageable pageRequest) {
-        return genericItemRepository.getCurrentValidItemsByType(type);
+    public Page<Item> getCurrentValidItemsByType(ItemType type, Pageable pageRequest) {
+        return genericItemRepository.getCurrentValidItemsByType(new Date(), type, pageRequest);
     }
 
     public Page<Item> findAllItems(ItemType itemType, Pageable pageRequest){
-        return genericItemRepository.findAllItems(new Date(), itemType, pageRequest);
+        return genericItemRepository.findAllItems(itemType, pageRequest);
     }
 
     @Transactional
