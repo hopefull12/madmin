@@ -13,7 +13,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.es.masjid.madmin.controller.DocumentController;
+import com.es.masjid.backup.DocumentController;
 import com.es.masjid.madmin.model.Document;
 import com.es.masjid.madmin.model.DocumentBean;
 import com.es.masjid.madmin.repository.DocumentRepository;
