@@ -22,7 +22,7 @@
                             <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
                             <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
                         </div>
-                        <h2 class="panel-title text-center">Prayer Time CSV Files</h2>
+                        <h2 class="panel-title text-center">Manage ${itemBean.itemType}</h2>
                     </header>
                     <div class="panel-body">
                         <table class="display table table-bordered table-striped" id="datatable-media">
