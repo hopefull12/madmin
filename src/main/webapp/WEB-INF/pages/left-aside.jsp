@@ -54,19 +54,24 @@
 									<li class="nav-parent nav-expanded nav-active">
 										<a>
 											<i class="fa fa-copy" aria-hidden="true"></i>
-											<span>Prayer Times </span>
+											<span>Media</span>
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="${pageContext.request.contextPath}/createPTCSVFile">
-													 Upload Prayer Times CSV File
+												<a href="${pageContext.request.contextPath}/item/all?itemType=MEDIA_AUDIO">
+													 Audio
 												</a>
 											</li>
 											<li>
-												<a href="${pageContext.request.contextPath}/displayPTCSVFiles">
-													 Manage Prayer Time CSV Files
+												<a href="${pageContext.request.contextPath}/item/all?itemType=MEDIA_VIDEO">
+													 Video
 												</a>
-											</li>																														
+											</li>	
+											<li>
+												<a href="${pageContext.request.contextPath}/item/all?itemType=MEDIA_IMAGE">
+													 Image
+												</a>
+											</li>																																								
 										</ul>
 									</li>		
 									<!-- 							

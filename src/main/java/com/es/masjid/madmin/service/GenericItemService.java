@@ -22,7 +22,7 @@ public interface GenericItemService {
 
     Page<Item> getCurrentValidItemsByType(ItemType type, Pageable pageRequest);
 
-    Page<Item> findAllItems(ItemType itemType, Pageable pageRequest);
+    List<Item> findAllItems(ItemType itemType);
 
     void deleteItem(Integer id);
 

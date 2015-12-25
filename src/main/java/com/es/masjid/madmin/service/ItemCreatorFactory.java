@@ -12,6 +12,10 @@ public class ItemCreatorFactory {
         if(ItemType.PT_CSV.equals(itemType)){
             return new PrayerTimesCSVItemCreator();
         }
+        else if(ItemType.MEDIA_IMAGE.equals(itemType) || ItemType.MEDIA_AUDIO.equals(itemType) ||
+        		ItemType.MEDIA_VIDEO.equals(itemType)){
+        	return new MediaItemCreator();
+        }
         else {
             return new ItemCreator();
         }

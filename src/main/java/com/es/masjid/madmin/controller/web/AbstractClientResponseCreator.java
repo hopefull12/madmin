@@ -3,10 +3,13 @@ package com.es.masjid.madmin.controller.web;
 import com.es.masjid.madmin.model.Item;
 import com.es.masjid.madmin.model.ItemType;
 import com.es.masjid.madmin.service.GenericItemService;
+
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.annotation.Resource;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +47,7 @@ public class AbstractClientResponseCreator implements ClientResponseCreator{
         return genericItemService.getCurrentAndFutureValidItemsByType(itemType);
     }
 
-    protected List<Item> getAllCurrentItems(ItemType itemType, Pageable pageRequest){
+    protected Page<Item> getAllCurrentItems(ItemType itemType, Pageable pageRequest){
         return genericItemService.getCurrentValidItemsByType(itemType, pageRequest);
     }
 

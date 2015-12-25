@@ -24,6 +24,7 @@ public class ItemCreator {
         preProcessing();
         validate();
         setBaseProperties();
+        setCustomProperties();
         setAttachments();
 
         return item;

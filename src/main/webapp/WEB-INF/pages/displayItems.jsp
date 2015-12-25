@@ -10,7 +10,7 @@
 
     <c:choose>
 
-    <c:when test="${itemBean.itemType == 'MEDIA'}" >
+    <c:when test="${itemBean.itemType == 'MEDIA_AUDIO' || itemBean.itemType == 'MEDIA_VIDEO' || itemBean.itemType == 'MEDIA_IMAGE'}" >
         <!-- Display all document items start -->
         <div class="row">
             <div class="col-md-2">
@@ -41,7 +41,7 @@
 
                                 <tr>
 
-                                    <td><a href="${pageContext.request.contextPath}/displayPTCSVFiles/${itemVar.displayName}/">${itemVar.attachment1Name}</a></td>
+                                    <td><a href="${pageContext.request.contextPath}/displayPTCSVFiles/${itemVar.displayName}/">${itemVar.displayName}</a></td>
                                     <td><fmt:formatDate value="${itemVar.validFrom}" pattern="MMM-dd-yyyy"/></td>
                                     <td><fmt:formatDate value="${itemVar.validTo}" pattern="MMM-dd-yyyy"/></td>
                                     <td><fmt:formatDate value="${itemVar.dateCreated}" pattern="MMM-dd-yyyy"/></td>
@@ -95,13 +95,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-4 control-label" for="inputSuccess">Media Type</label>
-                                <div class="col-sm-8">
-                                    <form:select path="itemType" items="${mediaTypes}"/>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
                                 <label class="col-sm-4 control-label" for="inputSuccess">Media Link</label>
                                 <div class="col-sm-8">
                                     <form:input path="name" />
@@ -123,8 +116,23 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="inputSuccess">Speaker Name (optional)</label>
+                                <div class="col-sm-8">
+                                    <form:input path="longDescription" />
+                                </div>
+                            </div>                            
+                            
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="inputSuccess">Description</label>
+                                <div class="col-sm-8">
+                                    <form:textarea rows="4" cols="50" path="shortDescription" />
+                                </div>
+                            </div>                            
 
                         </div>
+                        <form:hidden path="itemType"/>
                         <footer class="panel-footer text-center">
                             <button class="btn btn-primary">Submit</button>
                             <button type="reset" class="btn btn-default">Reset</button>
@@ -264,7 +272,7 @@
             <!-- Display form for creating document item End -->
 
         </c:when>    
-        <c:when test="${item.itemType == 'EVENT'}" >
+        <c:when test="${itemBean.itemType == 'EVENT'}" >
             <!-- Display all event items start -->
             <div class="row">
                 <div class="col-md-2">
@@ -331,7 +339,7 @@
                 </div>
                 <div class="col-md-8">
 
-                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="item"  enctype="multipart/form-data">
+                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="itemBean"  enctype="multipart/form-data">
                         <section class="panel">
                             <header class="panel-heading">
                                 <div class="panel-actions">
@@ -402,7 +410,7 @@
 
         </c:when>        
         
-        <c:when test="${item.itemType == 'DOWNLOADDOC'}" >
+        <c:when test="${itemBean.itemType == 'DOWNLOADDOC'}" >
             <!-- Display all document items start -->
             <div class="row">
                 <div class="col-md-2">
@@ -468,7 +476,7 @@
 				<div class="col-md-2"></div>
                 <div class="col-md-8">
 
-                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="item"  enctype="multipart/form-data">
+                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="itemBean"  enctype="multipart/form-data">
                         <section class="panel">
                             <header class="panel-heading">
                                 <div class="panel-actions">
@@ -547,7 +555,7 @@
 
         </c:when>
         
-        <c:when test="${item.itemType == 'PT_PDF'}" >
+        <c:when test="${itemBean.itemType == 'PT_PDF'}" >
             <!-- Display all document items start -->
             <div class="row">
                 <div class="col-md-2">
@@ -613,7 +621,7 @@
 				<div class="col-md-2"></div>
                 <div class="col-md-8">
 
-                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="item"  enctype="multipart/form-data">
+                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="itemBean"  enctype="multipart/form-data">
                         <section class="panel">
                             <header class="panel-heading">
                                 <div class="panel-actions">
@@ -693,7 +701,7 @@
         </c:when>        
         
         
-        <c:when test="${item.itemType == 'ADS'}" >
+        <c:when test="${itemBean.itemType == 'ADS'}" >
             <!-- Display all paid ad items start -->
             <div class="row">
                 <div class="col-md-2">
@@ -759,7 +767,7 @@
                 </div>
                 <div class="col-md-8">
 
-                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="item"  enctype="multipart/form-data">
+                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="itemBean"  enctype="multipart/form-data">
                         <section class="panel">
                             <header class="panel-heading">
                                 <div class="panel-actions">
@@ -831,7 +839,7 @@
         </c:when>        
         
     
-		<c:when test="${item.itemType == 'NEWS'}" >
+		<c:when test="${itemBean.itemType == 'NEWS'}" >
 		
             <!-- Display all news items start -->
             <div class="row">
@@ -899,7 +907,7 @@
                 </div>            
                 <div class="col-md-8">
 
-                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="item"  enctype="multipart/form-data">
+                    <form:form id="form2" action="${pageContext.request.contextPath}/item/create" cssClass="form-horizontal form-bordered" method="POST" commandName="itemBean"  enctype="multipart/form-data">
                         <section class="panel">
                             <header class="panel-heading">
                                 <div class="panel-actions">

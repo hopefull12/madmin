@@ -31,7 +31,7 @@ public class GenericItemServiceImpl implements GenericItemService {
 
     @Resource
     private Environment env;
-
+   
     private final String DATA_PATH = "data.path";
     private final String PRAYER_TIMES_FILE_NAME = "prayertimes.csv";
 
@@ -79,8 +79,8 @@ public class GenericItemServiceImpl implements GenericItemService {
         return genericItemRepository.getCurrentValidItemsByType(new Date(), type, pageRequest);
     }
 
-    public Page<Item> findAllItems(ItemType itemType, Pageable pageRequest){
-        return genericItemRepository.findAllItems(itemType, pageRequest);
+    public List<Item> findAllItems(ItemType itemType){
+        return genericItemRepository.findAllItems(itemType);
     }
 
     @Transactional

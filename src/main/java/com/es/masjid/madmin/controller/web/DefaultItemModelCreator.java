@@ -39,7 +39,7 @@ public class DefaultItemModelCreator implements ItemModelCreator {
     }
 
     protected void addCommonObjects(){
-        List<Item> items = genericItemService.getCurrentAndFutureValidItemsByType(itemType);
+        List<Item> items = genericItemService.findAllItems(itemType);
         mav.addObject("items", mapItemToDTO(items));
 
         ItemBean itemBean = new ItemBean();

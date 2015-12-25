@@ -4,6 +4,8 @@ import com.es.masjid.madmin.model.Item;
 import com.es.masjid.madmin.model.ItemType;
 import com.es.masjid.madmin.service.GenericItemService;
 import com.es.masjid.madmin.util.ItemUtil;
+
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.text.SimpleDateFormat;
@@ -21,11 +23,11 @@ public class MediaItemResponseCreator  extends AbstractClientResponseCreator {
     }
 
     public List<Map<String, String>> createAllItemsResponse(ItemType itemType, Pageable pageRequest){
-        List<Item> items = getAllCurrentItems(itemType, pageRequest);
+        Page<Item> items = getAllCurrentItems(itemType, pageRequest);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");                
 
-        for(Item item : ItemUtil.safe(items)){
+        for(Item item : ItemUtil.safe(items.getContent())){
             Map<String, String> map = new LinkedHashMap<>();
             map.put("title", item.getDisplayName());
             map.put("name", item.getName());

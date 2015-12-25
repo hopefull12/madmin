@@ -23,7 +23,7 @@ public interface GenericItemRepository extends JpaRepository<Item, Integer>, Gen
 
     @Query(value = "select i from Item i where i.itemType = :itemType",
             countQuery = "select count(i) from Item i where i.itemType = :itemType")
-    Page<Item> findAllItems(@Param("itemType") ItemType itemType, Pageable pageable);
+    List<Item> findAllItems(@Param("itemType") ItemType itemType);
     
     @Query(value = "select i from Item i where i.validFrom <= :currentDate and i.validTo >= :currentDate and i.itemType = :itemType",
             countQuery = "select count(i) from Item i where i.validFrom <= :currentDate and i.validTo >= :currentDate and i.itemType = :itemType")    
