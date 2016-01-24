@@ -1,5 +1,6 @@
 package com.es.masjid.madmin.init;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.annotation.Resource;
@@ -13,10 +14,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -134,5 +137,27 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 	public ViewResolver viewResolver() {
 	return new TilesViewResolver();
 	}	
+	
+	@Override
+	public void addArgumentResolvers(
+			List<HandlerMethodArgumentResolver> argumentResolvers) {
+		
+	    PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
+	    //resolver.setPageParameterName("page.page");
+	    //resolver.setSizeParameterName("page.size");
+	    resolver.setOneIndexedParameters(true);
+	    argumentResolvers.add(resolver);		
+		
+		super.addArgumentResolvers(argumentResolvers);
+	}
+
+//	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+//	    PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
+//	    resolver.setPageParameterName("page.page");
+//	    resolver.setSizeParameterName("page.size");
+//	    resolver.setOneIndexedParameters(true);
+//	    argumentResolvers.add(resolver);
+//	    super.addArgumentResolvers(argumentResolvers);
+//	}	
 
 }

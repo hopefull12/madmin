@@ -50,4 +50,11 @@ public class ClientItemController {
         ClientResponseCreator clientResponseCreator = ClientItemResponseCreatorFactory.getItemModelCreator(itemType, genericItemService);
         return clientResponseCreator.createOneItemResponse(id);
     }
+    
+    @RequestMapping(value={"/items/ajax"}, method=RequestMethod.GET)
+	public @ResponseBody List<Map<String, String>> getPageableItems(@RequestParam ItemType itemType, Pageable pageable){
+        ClientResponseCreator clientResponseCreator = ClientItemResponseCreatorFactory.getItemModelCreator(itemType, genericItemService);
+        return clientResponseCreator.createAllItemsResponse(itemType, pageable);
+
+	}    
 }
