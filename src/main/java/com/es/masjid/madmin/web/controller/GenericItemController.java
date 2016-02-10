@@ -33,7 +33,7 @@ public class GenericItemController {
     @RequestMapping(value={"/all"}, method= RequestMethod.GET)
     public ModelAndView getItems(@RequestParam ItemType itemType) {
         return genericItemControllerUtil.getItems(itemType, "itemsTile");
-    }
+    }   
 
     @RequestMapping(value={"/create"}, method=RequestMethod.POST)
     public ModelAndView createItem(@ModelAttribute ItemBean itemBean,
@@ -41,7 +41,7 @@ public class GenericItemController {
                                    final RedirectAttributes redirectAttributes) {
         return genericItemControllerUtil.createItem(itemBean, result, redirectAttributes, "/item/all?itemType="+itemBean.getItemType(), "itemsTile");
     }
-    
+
   @RequestMapping(value={"/delete"}, method=RequestMethod.GET)
   public ModelAndView deleteNewsItem(@RequestParam Integer id, @RequestParam ItemType itemType, final RedirectAttributes redirectAttributes) {
       return genericItemControllerUtil.deleteItem(id, itemType, redirectAttributes, "/item/all?itemType="+itemType);
